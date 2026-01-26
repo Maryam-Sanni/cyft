@@ -1,0 +1,8 @@
+/* Keep root full width */
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove Vite demo styles */
