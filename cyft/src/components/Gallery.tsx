@@ -11,7 +11,7 @@ export default function GallerySection() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
   
             {/* Content */}
-            <div className="space-y-6">
+            <div className="space-y-6 mt-[-50px] lg:mt-0">
               <span className="text-[18px] font-medium tracking-widest text-[#DE6328] uppercase">
               GALLERY
               </span>

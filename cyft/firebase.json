@@ -1,0 +1,13 @@
+{
+  "hosting": [
+    {
+      "target": "cyft-consulting",
+      "public": "dist",
+      "ignore": ["firebase.json", "*/.", "*/node_modules/*"],
+      "rewrites": [{ "source": "**", "destination": "/index.html" }],
+      "upload": {
+        "timeout": 60000
+      }
+    }
+  ]
+}

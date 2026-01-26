@@ -11,7 +11,7 @@ const Hero = () => {
     const heroImages = [heroImage, heroImage2, heroImage3];
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative lg:min-h-[1084px] min-h-[800px] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
 {/* Mobile only: object-cover */}
 <div className="block lg:hidden">
@@ -32,9 +32,9 @@ const Hero = () => {
 </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center flex h-full mt-[-270px] lg:mt-[-80px]">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center flex h-full mt-[-250px] lg:mt-[-320px]">
         <div className="">
-          <h1 className="text-white text-4xl md:text-6xl lg:text-[80px] font-bold leading-tight">
+          <h1 className="text-white text-[32px] md:text-5xl lg:text-[80px] font-bold leading-tight">
             Structured Event Planning & <br />
             Reliable Facility Operations
           </h1>
@@ -44,7 +44,7 @@ const Hero = () => {
             accountability and results.
           </p>
 
-          <button className="mt-8 lg:w-[389px] w-[200px] inline-flex flex justify-between gap-3 bg-[#DE6328] text-white px-4 py-3 border-1 border-white rounded-full lg:text-[24px] text-md font-bold hover:bg-orange-500 transition">
+          <button className="mt-8 lg:w-[389px] w-[200px] inline-flex flex justify-between gap-3 bg-[#DE6328] text-white px-4 py-2 border-1 border-white rounded-full lg:text-[24px] text-md font-bold hover:bg-orange-500 transition">
             Get in touch
             <img src={arrowLong} alt="Arrow" className="w-auto h-auto justify-right" />
           </button>

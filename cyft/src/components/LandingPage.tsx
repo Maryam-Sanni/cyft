@@ -4,6 +4,8 @@ import WhyChoosingUs from "./WhyChoosingUs";
 import OurServices from "./services";
 import Experience from "./Experience";
 import Gallery from "./Gallery";
+import Testimonials from "./Testimonials";
+import Footer from "./Footer"
 
 const LandingPage = () => {
   return (
@@ -14,6 +16,8 @@ const LandingPage = () => {
     <OurServices />
     <Experience />
     <Gallery />
+    <Testimonials />
+    <Footer />
     </div>
   );
 };

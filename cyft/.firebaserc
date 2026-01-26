@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "cyft-consulting"
+  },
+  "targets": {
+    "cyft-consulting": {
+      "hosting": {
+        "cyft-consulting": [
+          "cyft-consulting"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

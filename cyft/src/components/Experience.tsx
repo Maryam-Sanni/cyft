@@ -7,7 +7,7 @@ export default function ExperienceSection() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Image */}
-            <div className="relative">
+            <div className="relative order-2 lg:order-1">
               {/* Background shape */}
               <div className="hidden md:block absolute -top-8 -left-8 w-full h-full bg-[#F7F7F7] rounded-3xl" />
   
@@ -19,7 +19,7 @@ export default function ExperienceSection() {
             </div>
   
             {/* Content */}
-            <div className="space-y-6">
+            <div className="space-y-6 order-1 lg:order-2">
               <span className="text-[18px] font-medium tracking-widest text-[#DE6328] uppercase">
                 Experiences
               </span>
