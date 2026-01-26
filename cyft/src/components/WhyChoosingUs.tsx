@@ -2,7 +2,7 @@ import arrowLong from "../assets/arrow-long-orange.png";
 
 export default function WhyChoosingUs() {
   return (
-    <section className="w-full bg-white py-16 px-4 mt-10">
+    <section className="w-full bg-white py-16 px-4 lg:mt-15 mt-1 lg:mb-15 mb-1">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-10 items-start">
           {/* Left Title */}

@@ -48,7 +48,7 @@ export default function OurServices() {
     <button
       key={key}
       onClick={() => setActive(key as ServiceKey)}
-      className={`px-4 py-2 rounded-full transition text-sm md:text-[18px] ${
+      className={`px-4 py-2 rounded-full transition text-sm md:text-[17px] ${
         active === key
           ? "bg-white shadow text-gray-900"
           : "text-gray-500 hover:text-gray-900"
@@ -70,13 +70,13 @@ export default function OurServices() {
         </div>
 
         {/* Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full lg:ml-[30px]">
   {/* Text */}
   <div className="space-y-6 flex flex-col justify-center items-start lg:items-start">
     <h3 className="text-3xl md:text-[42px] font-bold text-gray-900 leading-tight">
       {service.title}
     </h3>
-    <p className="text-gray-600 max-w-xl text-sm md:text-[24px]">{service.description}</p>
+    <p className="text-gray-600 max-w-xl text-sm md:text-[18px]">{service.description}</p>
     <button className="inline-flex items-center gap-2 bg-[#DE6328] text-white px-4 py-2 rounded-full text-md font-normal hover:bg-orange-500 transition">
       Get in touch
       <img src={arrowLong} alt="Arrow" className="w-auto h-auto" />

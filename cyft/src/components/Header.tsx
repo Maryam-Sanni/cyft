@@ -16,7 +16,7 @@ const Header = () => {
           </nav>
   
           {/* CTA */}
-          <button className="bg-[#DE6328] text-white px-10 py-2.5 rounded-full text-md font-semibold hover:bg-orange-500 transition border-1 border-white">
+          <button className="bg-[#DE6328] text-white lg:px-10 w-[100px] lg:w-auto py-2.5 rounded-full lg:text-md text-sm font-semibold hover:bg-orange-500 transition border-1 border-white">
             Get in touch
           </button>
         </div>

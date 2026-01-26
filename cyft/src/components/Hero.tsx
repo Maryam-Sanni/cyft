@@ -13,25 +13,27 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
-      <div className="sm-hidden">
-      <img
-  src={currentHero}
-  alt="Hero"
-  className="absolute inset-0 w-full h-full"
-/>
+{/* Mobile only: object-cover */}
+<div className="block lg:hidden">
+  <img
+    src={currentHero}
+    alt="Hero"
+    className="absolute inset-0 w-full h-full object-cover object-center"
+  />
 </div>
 
-<div className="lg-hidden">
-<img
-  src={currentHero}
-  alt="Hero"
-  className="absolute inset-0 w-full h-full object-cover lg:object-center"
-/>
+{/* Desktop only: default / object-center */}
+<div className="hidden lg:block">
+  <img
+    src={currentHero}
+    alt="Hero"
+    className="absolute inset-0 w-full h-full"
+  />
 </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center flex h-full">
-        <div className="mt-[-80px]">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center flex h-full mt-[-270px] lg:mt-[-80px]">
+        <div className="">
           <h1 className="text-white text-4xl md:text-6xl lg:text-[80px] font-bold leading-tight">
             Structured Event Planning & <br />
             Reliable Facility Operations
@@ -49,14 +51,14 @@ const Hero = () => {
         </div>
       </div>
        {/* Transparent box with circles */}
-       <div className="absolute h-10 border-1 border-white left-6 lg:left-12 bottom-10 lg:top-1/2 lg:transform lg:-translate-y-1/2 bg-white/20 rounded-xl px-2 py-2 flex gap-3 z-20">
+       <div className="absolute h-10 border-1 border-white left-6 lg:left-12 bottom-10 top-2/3 lg:transform lg:-translate-y-1/2 bg-white/20 rounded-xl px-2 py-2 flex gap-3 z-20">
        {heroImages.map((img, index) => (
   <button
     key={index}
     onClick={() => setCurrentHero(img)}
     className={`relative w-5 h-5 rounded-full border-2 border-white flex items-center justify-center ${
       index === 0
-        ? "bg-[#DE6328]"
+        ? "bg-[#E58411]"
         : index === 1
         ? "bg-[#385650]"
         : "bg-[#D6D3CE]"
