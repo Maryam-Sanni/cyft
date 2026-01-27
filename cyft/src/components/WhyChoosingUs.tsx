@@ -8,7 +8,7 @@ export default function WhyChoosingUs() {
           {/* Left Title */}
           <div className="lg:col-span-1">
             <h2 className="text-3xl md:text-[42px] font-bold text-gray-900 leading-tight">
-              Why <br className="hidden md:block" /> Choosing Us
+              Why <br className="hidden md:block" /> Choose Us
             </h2>
           </div>
 

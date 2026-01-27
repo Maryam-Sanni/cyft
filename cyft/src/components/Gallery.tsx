@@ -2,6 +2,7 @@ import arrowLong from "../assets/arrow-long-orange.png";
 import Gallery1 from "../assets/Gallery1.png";
 import Gallery2 from "../assets/Gallery2.png";
 import Gallery3 from "../assets/Gallery3.png";
+import MobileGallery from "../assets/mobile-gallery.png";
 
 
 export default function GallerySection() {
@@ -28,8 +29,9 @@ export default function GallerySection() {
                 More Info  <img src={arrowLong} alt="Arrow" className="w-auto h-auto justify-right" />
               </button>
             </div>
-             {/* Image Layout (Exact Match) */}
-<div className="grid grid-cols-2 gap-4">
+
+             {/* Image Layout (Desktop) */}
+             <div className="hidden sm:grid grid-cols-2 gap-4">
 {/* Left stacked images */}
 <div className="flex flex-col gap-6">
 <img
@@ -50,15 +52,27 @@ className="w-full h-auto object-cover rounded-2xl mt-[-60px]"
 {/* Right tall image */}
 <div className="relative mt-0 lg:mt-[200px]">
               {/* Background shape */}
-              <div className="hidden md:block absolute -top-15 -right-1 w-[280px] h-[445px] bg-[#F7F7F7] rounded-3xl" />
+              <div className="hidden md:block absolute -top-15 -right-1 w-[280px] bg-[#F7F7F7] rounded-3xl" />
   
               <img
                src={Gallery3}
                 alt="Event setup"
-                className="relative w-full h-[445px] object-cover rounded-3xl shadow-lg"
+                className="relative w-full lg:h-[445px] h-[380px] object-cover rounded-3xl shadow-lg"
               />
             </div>
+            </div>
+
+ {/* Image Layout (Mobile) */}
+ <div className="relative w-full h-full sm:hidden mt-10 flex justify-center">
+  {/* Bottom image */}
+  <img
+    src={MobileGallery}
+    alt="Event setup"
+    className="w-full h-auto object-cover rounded-3xl"
+  />
 </div>
+
+
           </div>
         </div>
       </section>

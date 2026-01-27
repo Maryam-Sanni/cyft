@@ -44,7 +44,7 @@ import {
             <ul className="space-y-2 text-[15px] text-gray-600">
               <li>Contact Us</li>
               <li>About Us</li>
-              <li>Our Brochure</li>
+              <li>Resources</li>
             </ul>
           </div>
   

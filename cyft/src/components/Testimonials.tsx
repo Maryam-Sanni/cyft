@@ -86,7 +86,7 @@ const onTouchEnd = () => {
 };
 
   return (
-    <section className="w-full bg-white px-4 mb-20">
+    <section className="w-full bg-white px-4 mb-20 lg:mt-0 mt-[-30px]">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
@@ -156,13 +156,13 @@ const onTouchEnd = () => {
           {/* Navigation */}
           <button
             onClick={() => setIndex((index - 1 + reviews.length) % reviews.length)}
-            className="hidden md:flex absolute -left-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-white shadow rounded-full items-center justify-center"
+            className="md:flex absolute -left-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-white shadow rounded-full items-center justify-center"
           >
             ←
           </button>
           <button
             onClick={() => setIndex((index + 1) % reviews.length)}
-            className="hidden md:flex absolute -right-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-white shadow rounded-full items-center justify-center"
+            className="md:flex absolute -right-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-white shadow rounded-full items-center justify-center"
           >
             →
           </button>
