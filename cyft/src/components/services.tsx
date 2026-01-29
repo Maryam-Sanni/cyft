@@ -1,7 +1,7 @@
 import { useState } from "react";
 import service1 from "../assets/service1.png";
 import service2 from "../assets/service2.png";
-import service3 from "../assets/service3.png";
+import service3 from "../assets/service4.png";
 import arrowLong from "../assets/arrow-long.png";
 
 const services = {
@@ -15,18 +15,18 @@ const services = {
     },
     facility: {
       label: "Facility Management",
-      bg: "bg-[#F6B76F]",
+      bg: "bg-[#FFF1E0]",
       title: "Reliable Facility Operations",
       description:
-        "We maintain and manage your facilities with structured processes, ensuring smooth day-to-day operations and long-term efficiency",
+        "We maintain and manage your facilities with structured processes, ensuring smooth day-to-day operations and long-term efficiency.",
       image: service2,
     },
     training: {
       label: "Training",
-      bg: "bg-[#B0C1E9]",
-      title: "Professional Training & Development",
+      bg: "bg-[#EEF3FF]",
+      title: "Training & Human Capacity Development",
       description:
-        "We provide targeted training programs to equip your team with the skills and knowledge needed for optimal performance",
+        "We provide structured training and capacity development solutions that empower teams, improve efficiency, and support long-term organizational effectiveness.",
       image: service3,
     },
   } as const;

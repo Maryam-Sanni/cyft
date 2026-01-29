@@ -35,12 +35,12 @@ const Hero = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center flex h-full mt-[-250px] lg:mt-[-320px]">
         <div className="">
           <h1 className="text-white text-[32px] md:text-5xl lg:text-[80px] font-bold leading-tight">
-            Structured Event Planning & <br />
-            Reliable Facility Operations
+            Structured End-to-End <br />
+            Management Services
           </h1>
 
           <p className="mt-6 text-white/80 text-md md:text-[18px] lg:text-[24px] leading-relaxed max-w-[600px] mx-auto">
-            End-to-end management services built for consistency,
+            Built for consistency,
             accountability and results.
           </p>
 

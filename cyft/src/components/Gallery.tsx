@@ -18,7 +18,7 @@ export default function GallerySection() {
               </span>
   
               <h2 className="text-3xl md:text-[42px] font-bold text-gray-900 leading-tight mt-[25px]">
-              Experience our  <br /> Expertise Firsthand, <br /> Up close
+              Explore Our <br /> Expertise Firsthand, <br /> Up Close
               </h2>
   
               <p className="text-gray-600 leading-relaxed max-w-xl text-sm md:text-[18px] mt-3">
