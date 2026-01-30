@@ -39,15 +39,15 @@ import {
             />
   
             <LinkButton
-              icon={<FaEnvelope />}
-              text="Email Us"
-              href="https://mail.google.com/mail/?view=cm&to=info@cyftconsulting.com&su=Inquiry%20from%20CYFT%20Website&body=Hello%20CYFT%2C"
-            />
+            icon={<FaEnvelope />}
+            text="Email Us"
+            href="mailto:info@cyftconsulting.com"
+          />
   
             <LinkButton
               icon={<FaInstagram />}
               text="Instagram"
-              href="https://www.instagram.com/cyft_consultingltd?igsh=NDlwd2E3Y2Z6Zmti"
+              href="https://www.instagram.com/cyft_consultingltd"
             />
   
             <LinkButton
@@ -59,7 +59,7 @@ import {
             <LinkButton
               icon={<FaTiktok />}
               text="TikTok"
-              href="https://www.tiktok.com/@cyftconsultingltd?_r=1&_t=ZS-93OeVwCuzhs"
+              href="https://www.tiktok.com/@cyftconsultingltd"
             />
   
             <LinkButton
