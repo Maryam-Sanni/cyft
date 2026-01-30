@@ -78,7 +78,7 @@ export default function OurServices() {
     </h3>
     <p className="text-gray-600 max-w-xl text-sm md:text-[18px]">{service.description}</p>
     <button className="inline-flex items-center gap-2 bg-[#DE6328] text-white px-4 py-2 rounded-full text-md font-normal hover:bg-orange-500 transition">
-      Get in touch
+      Learn More
       <img src={arrowLong} alt="Arrow" className="w-auto h-auto" />
     </button>
   </div>
