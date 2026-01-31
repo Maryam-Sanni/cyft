@@ -1,4 +1,4 @@
-// import arrowLong from "../assets/arrow-long-orange.png";
+import arrowLong from "../assets/arrow-long-orange.png";
 
 export default function WhyChoosingUs() {
   return (
@@ -20,9 +20,9 @@ export default function WhyChoosingUs() {
               <p className="text-gray-600 text-[16px] leading-relaxed">
                 We work with clear systems and procedures that ensure efficient planning and consistent results.
               </p>
-              {/* <button className="flex items-center gap-2 text-[#DE6328] text-sm font-normal hover:gap-3 transition-all">
+              <button className="flex items-center gap-2 text-[#DE6328] text-sm font-normal hover:gap-3 transition-all">
                 More Info  <img src={arrowLong} alt="Arrow" className="w-auto h-auto justify-right" />
-              </button> */}
+              </button>
             </div>
 
             {/* Card 2 */}
@@ -31,9 +31,9 @@ export default function WhyChoosingUs() {
               <p className="text-gray-600 text-[16px] leading-relaxed">
                 We deliver services as agreed, meet timelines and maintain standards across all events and operations.
               </p>
-              {/* <button className="flex items-center gap-2 text-[#DE6328] text-sm font-normal hover:gap-3 transition-all">
+              <button className="flex items-center gap-2 text-[#DE6328] text-sm font-normal hover:gap-3 transition-all">
                 More Info <img src={arrowLong} alt="Arrow" className="w-auto h-auto justify-right" />
-              </button> */}
+              </button>
             </div>
 
             {/* Card 3 */}
@@ -42,9 +42,9 @@ export default function WhyChoosingUs() {
               <p className="text-gray-600 text-[16px] leading-relaxed">
                 We take responsibility for every assignment with proper supervision, communication and follow through.
               </p>
-              {/* <button className="flex items-center gap-2 text-[#DE6328] text-sm font-normal hover:gap-3 transition-all">
+              <button className="flex items-center gap-2 text-[#DE6328] text-sm font-normal hover:gap-3 transition-all">
                 More Info <img src={arrowLong} alt="Arrow" className="w-auto h-auto justify-right" />
-              </button> */}
+              </button>
             </div>
           </div>
         </div>

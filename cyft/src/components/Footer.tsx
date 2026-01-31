@@ -5,8 +5,11 @@ import {
   } from "react-icons/fa";
   import { FaTiktok } from "react-icons/fa6";
   import Logo from "../assets/Logo2.png";
+  import { useNavigate } from "react-router-dom";
 
   const Footer = () => {
+    const navigate = useNavigate();
+
     return (
       <footer className="bg-[#F7F7F7]">
         <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-10">
@@ -29,9 +32,13 @@ import {
             <h4 className="text-[#DE6328] font-normal mb-4 text-[17px]">
               Services
             </h4>
-            <ul className="space-y-2 text-[15px] text-gray-600">
-              <li>Event Management</li>
-              <li>Facility Management</li>
+            <ul className="space-y-2 text-[15px] text-gray-600 cursor-pointer">
+              <li
+              onClick={() => {navigate("/events-management")}}
+              >Event Management</li>
+              <li
+              onClick={() => {navigate("/facility-management")}}
+              >Facility Management</li>
               <li>Training</li>
             </ul>
           </div>
@@ -41,10 +48,14 @@ import {
             <h4 className="text-[#DE6328] font-normal mb-4 text-[17px]">
               Get in touch
             </h4>
-            <ul className="space-y-2 text-[15px] text-gray-600">
-              <li>Contact Us</li>
+            <ul className="space-y-2 text-[15px] text-gray-600 cursor-pointer">
+              <li
+              onClick={() => {navigate("/contact")}}
+              >Contact Us</li>
               <li>About Us</li>
-              <li>Resources</li>
+              <li
+              onClick={() => {navigate("/resources")}}
+              >Resources</li>
             </ul>
           </div>
   

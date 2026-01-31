@@ -1,47 +1,47 @@
-import { useState } from "react";
-import heroImage from "../assets/HeaderImage.png";
-import heroImage2 from "../assets/Hero2.png";
-import heroImage3 from "../assets/Hero3.png";
-import mobileHero from "../assets/mobile-hero.png";
+// import { useState } from "react";
+// import heroImage2 from "../assets/Hero2.png";
+// import heroImage3 from "../assets/Hero3.png";
+// import mobileHero from "../assets/mobile-hero.png";
+// import { Check } from "lucide-react";
+import heroImage from "../assets/Landing.png";
 import arrowLong from "../assets/arrow-long.png";
-import { Check } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
-    const [currentHero, setCurrentHero] = useState(heroImage);
+    // const [currentHero, setCurrentHero] = useState(heroImage);
+        // const heroImages = [heroImage, heroImage2, heroImage3];
     const navigate = useNavigate();
-    const heroImages = [heroImage, heroImage2, heroImage3];
 
   return (
-    <section className="relative lg:min-h-[1440px] min-h-[550px] flex items-center justify-center overflow-hidden">
+    <section className="relative lg:h-[1024px] lg:w-[1440px] min-h-[550px] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
 {/* Mobile only: object-cover */}
-<div className="block lg:hidden">
+{/* <div className="block lg:hidden">
   <img
     src={mobileHero}
     alt="Hero"
     className="absolute inset-0 w-full h-full object-cover object-center"
   />
-</div>
+</div> */}
 
 {/* Desktop only: default / object-center */}
-<div className="hidden lg:block">
+<div>
   <img
-    src={currentHero}
+    src={heroImage}
     alt="Hero"
     className="absolute inset-0 w-full h-full object-cover object-center"
   />
 </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center flex h-full mt-0 lg:mt-[-320px]">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center flex h-full mt-0 lg:mt-[320px]">
         <div className="">
-          <h1 className="text-white text-[32px] md:text-5xl lg:text-[80px] font-bold">
+          <h1 className="text-black text-[32px] md:text-5xl lg:text-[80px] font-bold">
             Structured End-to-End <br />
             Management Services
           </h1>
 
-          <p className="mt-6 text-white/80 text-md md:text-[18px] lg:text-[24px] max-w-[600px] mx-auto">
+          <p className="mt-6 text-black/80 text-md md:text-[18px] lg:text-[24px] max-w-[600px] mx-auto">
           End-to-end management services built for consistency, accountability and results.
           </p>
 
@@ -52,7 +52,7 @@ const Hero = () => {
         </div>
       </div>
        {/* Transparent box with circles */}
-       <div className="hidden absolute h-10 border-1 border-white left-6 lg:left-12 bottom-10 top-2/3 lg:transform lg:-translate-y-1/2 bg-white/20 rounded-xl px-2 py-2 flex gap-3 z-20">
+       {/* <div className="hidden absolute h-10 border-1 border-white left-6 lg:left-12 bottom-10 top-2/3 lg:transform lg:-translate-y-1/2 bg-white/20 rounded-xl px-2 py-2 flex gap-3 z-20">
        {heroImages.map((img, index) => (
   <button
     key={index}
@@ -70,7 +70,7 @@ const Hero = () => {
     )}
   </button>
 ))}
-      </div>
+      </div> */}
     </section>
   );
 };

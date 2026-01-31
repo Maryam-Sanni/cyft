@@ -1,9 +1,12 @@
 import { Building2, FileCheck2, Wallet } from "lucide-react";
 // import arrowprocess from "../assets/Vector.png";
+import { useNavigate } from "react-router-dom";
 
 export default function OurProcess() {
+  const navigate = useNavigate();
+
   return (
-    <section className="w-full bg-white py-20">
+    <section className="w-full bg-[#F0EBE9] py-20">
       <div className="max-w-6xl mx-auto px-4 text-center">
         {/* Heading */}
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-14">
@@ -64,12 +67,14 @@ export default function OurProcess() {
 
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row justify-center gap-4 mt-14">
-          <button className="bg-[#DE6328] hover:bg-orange-500 text-white px-8 py-3 rounded-full font-medium transition">
+          <button 
+          onClick={() => {navigate("/contact")}}
+          className="bg-[#DE6328] hover:bg-orange-500 text-white px-8 py-3 rounded-full font-medium transition">
             Book an Appointment
           </button>
-          <button className="border border-[#DE6328] text-[#DE6328] hover:bg-orange-50 px-8 py-3 rounded-full font-medium transition">
+          {/* <button className="border border-[#DE6328] text-[#DE6328] hover:bg-orange-50 px-8 py-3 rounded-full font-medium transition">
             Check Pricing
-          </button>
+          </button> */}
         </div>
       </div>
     </section>

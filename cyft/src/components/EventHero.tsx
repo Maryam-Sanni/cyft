@@ -1,10 +1,12 @@
-import eventHero from "../assets/EventHero.png";
+import eventHero from "../assets/Event.png";
 import arrowLong from "../assets/arrow-long.png";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
 
   return (
-    <section className="relative lg:min-h-[1084px] min-h-[500px] flex items-center justify-center overflow-hidden">
+    <section className="relative lg:h-[1024px] lg:w-[1440px] min-h-[550px] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
 {/* Mobile only: object-cover */}
 <div className="block lg:hidden">
@@ -25,17 +27,19 @@ const Hero = () => {
 </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center flex h-full mt-0 lg:mt-[-200px]">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center flex h-full mt-0 lg:mt-[500px]">
         <div className="">
-          <h1 className="text-white text-[32px] md:text-5xl lg:text-[80px] font-bold">
+          <h1 className="text-black text-[32px] md:text-5xl lg:text-[80px] font-bold">
           Event Management
           </h1>
 
-          <p className="mt-6 text-white/80 text-md md:text-[18px] lg:text-[24px] max-w-[600px] mx-auto">
+          <p className="mt-6 text-black/80 text-md md:text-[18px] lg:text-[24px] max-w-[600px] mx-auto">
           Structured planning and seamless execution <br/> for every occasion
           </p>
 
-          <button className="lg:mt-15 mt-10 lg:w-[389px] w-[200px] inline-flex flex justify-between gap-3 bg-[#DE6328] text-white px-4 py-2 border-1 border-white rounded-full lg:text-[22px] text-md font-bold hover:bg-orange-500 transition">
+          <button 
+          onClick={() => {navigate("/contact")}}
+          className="lg:mt-15 mt-10 lg:w-[389px] w-[200px] inline-flex flex justify-between gap-3 bg-[#DE6328] text-white px-4 py-2 border-1 border-white rounded-full lg:text-[22px] text-md font-bold hover:bg-orange-500 transition">
             Get in touch
             <img src={arrowLong} alt="Arrow" className="w-auto h-auto justify-right" />
           </button>

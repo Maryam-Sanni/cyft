@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import { Worker, Viewer } from "@react-pdf-viewer/core";
+// import { Worker, Viewer } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import { ChevronDown } from "lucide-react";
@@ -12,12 +12,13 @@ type Resource = {
   id: number;
   title: string;
   pdfUrl: string;
+  src: string
 };
 
 const resources: Resource[] = [
-  { id: 1, title: "Event Management Brochure", pdfUrl: "/pdfs/Brochure-Facility.pdf" },
-  { id: 2, title: "Facility Management Brochure", pdfUrl: "/pdfs/Brochure-Facility.pdf" },
-  { id: 3, title: "Training & Human Capacity Development Brochure", pdfUrl: "/pdfs/Brochure-Facility.pdf" },
+  { id: 1, title: "Event Management Brochure", pdfUrl: "/pdfs/Brochure-Facility.pdf", src: "https://heyzine.com/flip-book/11dfef241c.html" },
+  { id: 2, title: "Facility Management Brochure", pdfUrl: "/pdfs/Brochure-Facility.pdf", src: "https://heyzine.com/flip-book/11dfef241c.html" },
+  { id: 3, title: "Training & Human Capacity Development Brochure", pdfUrl: "/pdfs/Brochure-Facility.pdf", src: "https://heyzine.com/flip-book/11dfef241c.html" },
 ];
 
 export default function ResourcesPage() {
@@ -65,7 +66,7 @@ function CollapsiblePDF({ resource }: { resource: Resource }) {
       {/* Collapsible content */}
       <div
         className={`transition-all duration-300 ease-in-out overflow-hidden ${
-          isOpen ? "max-h-[1000px]" : "max-h-0"
+          isOpen ? "max-h-full" : "max-h-0"
         }`}
       >
         <div className="px-6 py-4">
@@ -79,10 +80,12 @@ function CollapsiblePDF({ resource }: { resource: Resource }) {
           </div>
 
           {/* Desktop: react-pdf-viewer */}
-          <div className="hidden lg:block w-full h-[600px]">
-            <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.9.179/build/pdf.worker.min.js">
-              <Viewer fileUrl={resource.pdfUrl} />
-            </Worker>
+          <div className="hidden lg:block w-full h-full">
+          <iframe 
+           allow="clipboard-write" 
+           className="w-[100%] h-[500px]"
+            src={resource.src}>
+            </iframe>
           </div>
         </div>
       </div>

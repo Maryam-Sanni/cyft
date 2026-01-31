@@ -48,7 +48,7 @@ const Header = () => {
 {/* Desktop only: default / object-center */}
 <div onClick={() => {navigate("/home")}} className="hidden lg:block">
 <img
-          src={Logo}
+          src={Logo2}
           alt="Logo"
           className={`transition-all duration-500 cursor-pointer ${
             scrolled ? "h-[42px] w-[80px]" : "lg:h-[50px] lg:w-[90px] h-[42px] w-[80px]"

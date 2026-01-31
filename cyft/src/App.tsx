@@ -5,11 +5,14 @@ import Connect from "./components/Connect";
 import Contact from "./components/Contact"
 import Events from "./components/Events";
 import Facility from "./components/Facility";
-import Resources from "./components/Resources"
+import Resources from "./components/Resources";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <BrowserRouter>
+     <ScrollToTop />
+     
       <Routes>
         <Route path="/" element={<ComingSoon />} />
         <Route path="/home" element={<LandingPage />} />
