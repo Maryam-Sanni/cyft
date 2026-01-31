@@ -70,7 +70,7 @@ const industries = [
       <section className="w-full bg-white">
         <div className="max-w-6xl mx-auto px-4">
           {/* Heading */}
-          <h2 className="text-center text-3xl md:text-4xl font-bold text-gray-900 mb-16 mt-20">
+          <h2 className="text-center text-3xl md:text-4xl font-bold text-gray-900 mb-10 mt-20">
             Industries We Serve
           </h2>
   
@@ -79,7 +79,7 @@ const industries = [
           {industries.map((item, index) => (
   <div
     key={index}
-    className="items-start gap-4 border-b border-[#F6973F] pb-4"
+    className="items-start gap-4 border-b border-[#F6973F] pb-2"
   >
     <div className="flex-shrink-0 w-20 h-20 mb-2 rounded-md flex items-center justify-center">
       <img

@@ -12,6 +12,34 @@ import {
   Layers
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import type { Variants } from "framer-motion";
+
+export const containerVariants: Variants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.15, // delay between each card
+      delayChildren: 0.2,    // initial delay
+    },
+  },
+};
+
+export const cardVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 50,
+    scale: 0.95,
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.16, 1, 0.3, 1], // cubic-bezier easing for smoothness
+    },
+  },
+};
 
     const SERVICES: Service[] = [
         {
@@ -144,11 +172,15 @@ export default function EventsManagementServices() {
     const isOpen = expandedId === service.id;
 
     return (
-      <motion.div
-        key={service.id}
-        layout
-        className="border border-gray-100 rounded-lg p-5 shadow-sm bg-white"
-      >
+            <motion.div
+              key={service.id}
+              variants={cardVariants}
+              whileHover={{
+                y: -8,
+                boxShadow: "0px 20px 40px rgba(0,0,0,0.08)",
+              }}
+              className="relative overflow-hidden border border-gray-100 rounded-2xl p-6 bg-white transition-all"
+            >
         {/* Top content */}
         <div className="flex items-start justify-between gap-4">
           <div>

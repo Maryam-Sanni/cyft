@@ -4,6 +4,7 @@ import Footer from "./Footer"
 import Process from "./OurProcessFa"
 import Industries from "./industries"
 import FaciltyService from "./FacilityService"
+import FacilityManagement from "./FacilityManagementService"
 
 const LandingPage = () => {
   return (
@@ -12,6 +13,7 @@ const LandingPage = () => {
     <FacilityHero />
     <Industries />
     <Process />
+    <FacilityManagement />
 <FaciltyService />
 
     <Footer />

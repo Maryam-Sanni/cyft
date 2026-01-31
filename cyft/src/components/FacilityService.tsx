@@ -4,7 +4,7 @@ import arrowLong from "../assets/arrow-long.png";
 export default function OurServices() {
  
   return (
-    <section className="w-full py-16 px-4 transition-colors duration-300 bg-[#FAD6AD]">
+    <section className="w-full py-16 px-4 mt-10 transition-colors duration-300 bg-[#FAD6AD]">
       <div className="max-w-7xl mx-auto">
 
   {/* Text */}
