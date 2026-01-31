@@ -4,7 +4,7 @@ import arrowLong from "../assets/arrow-long.png";
 const Hero = () => {
 
   return (
-    <section className="relative lg:min-h-[1084px] min-h-[550px] flex items-center justify-center overflow-hidden">
+    <section className="relative lg:min-h-[1084px] min-h-[500px] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
 {/* Mobile only: object-cover */}
 <div className="block lg:hidden">

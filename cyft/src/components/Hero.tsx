@@ -5,14 +5,15 @@ import heroImage3 from "../assets/Hero3.png";
 import mobileHero from "../assets/mobile-hero.png";
 import arrowLong from "../assets/arrow-long.png";
 import { Check } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
     const [currentHero, setCurrentHero] = useState(heroImage);
-
+    const navigate = useNavigate();
     const heroImages = [heroImage, heroImage2, heroImage3];
 
   return (
-    <section className="relative lg:min-h-[1084px] min-h-[550px] flex items-center justify-center overflow-hidden">
+    <section className="relative lg:min-h-[1440px] min-h-[550px] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
 {/* Mobile only: object-cover */}
 <div className="block lg:hidden">
@@ -44,7 +45,7 @@ const Hero = () => {
           End-to-end management services built for consistency, accountability and results.
           </p>
 
-          <button className="lg:mt-15 mt-10 lg:w-[389px] w-[200px] inline-flex flex justify-between gap-3 bg-[#DE6328] text-white px-4 py-2 border-1 border-white rounded-full lg:text-[22px] text-md font-bold hover:bg-orange-500 transition">
+          <button onClick={() => {navigate("/contact")}} className="lg:mt-15 mt-10 lg:w-[389px] w-[200px] inline-flex flex justify-between gap-3 bg-[#DE6328] text-white px-4 py-2 border-1 border-white rounded-full lg:text-[22px] text-md font-bold hover:bg-orange-500 transition cursor-pointer">
             Get in touch
             <img src={arrowLong} alt="Arrow" className="w-auto h-auto justify-right" />
           </button>

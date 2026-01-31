@@ -3,6 +3,7 @@ import service1 from "../assets/service1.png";
 import service2 from "../assets/service2.png";
 import service3 from "../assets/service4.png";
 import arrowLong from "../assets/arrow-long.png";
+import { useNavigate } from "react-router-dom";
 
 const services = {
     events: {
@@ -12,6 +13,7 @@ const services = {
       description:
         "From corporate conferences to private celebrations, we handle every detail to deliver memorable and flawlessly managed events.",
       image: service1,
+      navigate: "/events-management",
     },
     facility: {
       label: "Facility Management",
@@ -20,6 +22,7 @@ const services = {
       description:
         "We maintain and manage your facilities with structured processes, ensuring smooth day-to-day operations and long-term efficiency.",
       image: service2,
+      navigate: "/facility-management"
     },
     training: {
       label: "Training",
@@ -28,6 +31,7 @@ const services = {
       description:
         "We provide structured training and capacity development solutions that empower teams, improve efficiency, and support long-term organizational effectiveness.",
       image: service3,
+      navigate: "/home"
     },
   } as const;
 
@@ -36,6 +40,7 @@ type ServiceKey = keyof typeof services;
 export default function OurServices() {
     const [active, setActive] = useState<ServiceKey>("events"); 
     const service = services[active]; 
+    const navigate = useNavigate();
 
   return (
     <section className={`w-full py-16 px-4 transition-colors duration-300 ${service.bg}`}>
@@ -77,7 +82,8 @@ export default function OurServices() {
       {service.title}
     </h3>
     <p className="text-gray-600 max-w-xl text-sm md:text-[18px]">{service.description}</p>
-    <button className="inline-flex items-center gap-2 bg-[#DE6328] text-white px-4 py-2 rounded-full text-md font-normal hover:bg-orange-500 transition">
+    <button onClick={() => navigate(service.navigate)}
+className="inline-flex items-center gap-2 bg-[#DE6328] text-white px-4 py-2 rounded-full text-md font-normal hover:bg-orange-500 transition cursor-pointer">
       Learn More
       <img src={arrowLong} alt="Arrow" className="w-auto h-auto" />
     </button>

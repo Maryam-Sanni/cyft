@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Logo from "../assets/Logo.png";
+import Logo2 from "../assets/Logo2.png"
 import { ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -32,13 +33,28 @@ const Header = () => {
         `}
       >
         {/* Logo */}
-        <img
-          src={Logo}
+
+{/* Mobile only: object-cover */}
+<div onClick={() => {navigate("/home")}} className="block lg:hidden">
+<img
+          src={Logo2}
           alt="Logo"
-          className={`transition-all duration-500 ${
+          className={`transition-all duration-500 cursor-pointer ${
             scrolled ? "h-[42px] w-[80px]" : "lg:h-[50px] lg:w-[90px] h-[42px] w-[80px]"
           }`}
         />
+</div>
+
+{/* Desktop only: default / object-center */}
+<div onClick={() => {navigate("/home")}} className="hidden lg:block">
+<img
+          src={Logo}
+          alt="Logo"
+          className={`transition-all duration-500 cursor-pointer ${
+            scrolled ? "h-[42px] w-[80px]" : "lg:h-[50px] lg:w-[90px] h-[42px] w-[80px]"
+          }`}
+        />
+</div>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-14 text-[16px] text-black font-medium">
@@ -80,7 +96,7 @@ const Header = () => {
         </nav>
 
         {/* Desktop CTA */}
-        <button className="hidden md:block bg-[#DE6328] w-[163px] h-[40px] text-white rounded-full font-medium hover:bg-orange-500 transition-all shadow-md">
+        <button onClick={() => {navigate("/contact")}} className="hidden md:block bg-[#DE6328] w-[163px] h-[40px] text-white rounded-full font-medium hover:bg-orange-500 transition-all shadow-md cursor-pointer">
           Get in touch
         </button>
 
@@ -157,7 +173,7 @@ const Header = () => {
       </nav>
 
       {/* CTA */}
-      <button className="mt-10 w-full bg-[#DE6328] h-[48px] text-white rounded-full font-medium shadow-lg">
+      <button onClick={() => {navigate("/contact")}} className="mt-10 w-full bg-[#DE6328] h-[48px] text-white rounded-full font-medium shadow-lg cursor-pointer">
         Get in touch
       </button>
     </div>
