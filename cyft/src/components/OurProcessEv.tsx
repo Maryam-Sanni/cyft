@@ -6,7 +6,7 @@ export default function OurProcess() {
   const navigate = useNavigate();
 
   return (
-    <section className="w-full bg-[#F0EBE9] py-20">
+    <section className="w-full bg-white py-20">
       <div className="max-w-6xl mx-auto px-4 text-center">
         {/* Heading */}
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-14">

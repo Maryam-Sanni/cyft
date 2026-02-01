@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type BoothOption = {
   id: string;
@@ -62,7 +63,8 @@ export default function BoothCalculator() {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] =
     useState<AddOn["category"]>("Furniture");
-
+    const navigate = useNavigate();
+    
   const toggleAddOn = (addon: AddOn) => {
     setSelectedAddOns((prev) =>
       prev.some((a) => a.id === addon.id)
@@ -185,7 +187,7 @@ export default function BoothCalculator() {
             </div>
           </div>
 
-          <button className="mt-6 bg-[#DE6328] border border-white text-white rounded-full py-3 text-sm font-medium hover:bg-orange-500">
+          <button onClick={() => navigate("/contact")} className="mt-6 bg-[#DE6328] border border-white text-white rounded-full py-3 text-sm font-medium hover:bg-orange-500">
             Book Appointment
           </button>
         </div>
