@@ -5,10 +5,10 @@ import { motion } from "framer-motion";
 
 // replace these with your real images
 import img1 from "../assets/H1.png";
-import img2 from "../assets/H2.png";
-import img3 from "../assets/H3.png";
-import img4 from "../assets/H4.png";
-import img5 from "../assets/H5.png";
+import img2 from "../assets/H7.png";
+import img3 from "../assets/H11.png";
+import img4 from "../assets/H9.png";
+import img5 from "../assets/H8.png";
 
 import type { Variants } from "framer-motion";
 
@@ -300,7 +300,7 @@ const Hero = () => {
       style={{ transformStyle: "preserve-3d" }}
     >
       <img
-        src={img3}
+        src={img5}
         alt=""
         className="w-full h-full object-cover"
       />
@@ -379,7 +379,7 @@ const Hero = () => {
         </p>
 
         <button onClick={() => navigate("/contact")} 
-        className="group lg:mt-15 mt-10 lg:w-[389px] w-[200px] cursor-pointer inline-flex items-center justify-between gap-4 bg-[#DE6328] text-white lg:px-6 py-3 px-4 rounded-full text-lg font-bold shadow-lg hover:shadow-xl hover:scale-[1.03] transition-all" >
+        className="group lg:mt-15 mt-7 lg:w-[389px] w-[180px] cursor-pointer inline-flex items-center justify-between gap-4 bg-[#DE6328] text-white lg:px-6 lg:py-3 py-2 px-3 lg:text-lg text-md rounded-full font-bold shadow-lg hover:shadow-xl hover:scale-[1.03] transition-all" >
            Get in touch <img src={arrowLong} alt="" className="transition-transform group-hover:translate-x-2" /> 
            </button>
       </div>

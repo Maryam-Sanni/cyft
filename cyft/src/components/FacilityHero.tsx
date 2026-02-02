@@ -376,7 +376,7 @@ const Hero = () => {
         </p>
 
         <button onClick={() => navigate("/contact")} 
-        className="group lg:mt-15 mt-10 lg:w-[389px] w-[200px] cursor-pointer inline-flex items-center justify-between gap-4 bg-[#DE6328] text-white lg:px-6 py-3 px-4 rounded-full text-lg font-bold shadow-lg hover:shadow-xl hover:scale-[1.03] transition-all" >
+        className="group lg:mt-15 mt-7 lg:w-[389px] w-[180px] cursor-pointer inline-flex items-center justify-between gap-4 bg-[#DE6328] text-white lg:px-6 lg:py-3 py-2 px-3 lg:text-lg text-md rounded-full font-bold shadow-lg hover:shadow-xl hover:scale-[1.03] transition-all" >
            Get in touch <img src={arrowLong} alt="" className="transition-transform group-hover:translate-x-2" /> 
            </button>
       </div>
