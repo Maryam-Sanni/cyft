@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
 // replace these with your real images
 import img1 from "../assets/H1.png";
 import img2 from "../assets/H7.png";
-import img3 from "../assets/H11.png";
+import img3 from "../assets/H13.png";
 import img4 from "../assets/H9.png";
-import img5 from "../assets/H8.png";
+import img5 from "../assets/H14.png";
 
 import type { Variants } from "framer-motion";
 
@@ -330,7 +330,7 @@ const Hero = () => {
       className="w-[140px] h-[140px]
         rounded-full overflow-hidden bg-white shadow-xl"
     >
-      <img src={img2} className="w-full h-full object-cover" />
+      <img src={img4} className="w-full h-full object-cover" />
     </motion.div>
   </motion.div>
   </motion.div>

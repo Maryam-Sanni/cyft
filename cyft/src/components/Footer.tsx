@@ -22,8 +22,7 @@ import {
               className="w-28"
             />
             <p className="text-[15px] text-gray-600 max-w-xs">
-              The advantage of working with us is that we give you excellent
-              service and all-round facilities.
+              We provide excellent service underpinned by structured, end-to-end management tailored to your needs.
             </p>
           </div>
   

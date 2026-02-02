@@ -7,6 +7,7 @@ import Events from "./components/Events";
 import Facility from "./components/Facility";
 import Resources from "./components/Resources";
 import ScrollToTop from "./components/ScrollToTop";
+import Gallery from "./components/GalleryPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/events-management" element={<Events />} />
         <Route path="/facility-management" element={<Facility />} />
         <Route path="/resources" element={<Resources />} />
+        <Route path="/gallery" element={<Gallery />} />
       </Routes>
     </BrowserRouter>
   );
