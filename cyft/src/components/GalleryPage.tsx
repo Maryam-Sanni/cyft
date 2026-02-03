@@ -38,7 +38,7 @@ export default function Gallery() {
 
       <section className="max-w-[1300px] mx-auto lg:px-20 px-3 py-20">
 
-      <div className="relative min-h-screen bg-white overflow-hidden flex flex-col items-center justify-center mt-[-200px] mb-[-200px] lg:mb-10 lg:mt-10">
+      <div className="relative min-h-screen bg-white overflow-hidden flex flex-col items-center justify-center mt-[-180px] mb-[-200px] lg:mb-10 lg:mt-10">
 
 {/* HANDWRITING */}
 <AnimatePresence>
@@ -144,7 +144,7 @@ className="absolute top-1/2 h-[40px] w-full bg-[#DE6328]" />
     </div>
 
       <motion.div
-  className="relative w-full lg:h-[520px] md:h-[520px] h-[300px] overflow-hidden lg:mt-20 mt-10"
+  className="relative w-full lg:h-[520px] md:h-[520px] h-[300px] overflow-hidden mt-20"
   initial={{ opacity: 0, scale: 0.95 }}
   whileInView={{ opacity: 1, scale: 1 }}
   viewport={{ once: true }}
