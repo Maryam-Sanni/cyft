@@ -35,7 +35,7 @@ const Header = () => {
         {/* Logo */}
 
 {/* Mobile only: object-cover */}
-<div onClick={() => {navigate("/home")}} className="block lg:hidden">
+<div onClick={() => {navigate("/")}} className="block lg:hidden">
 <img
           src={Logo2}
           alt="Logo"
@@ -46,7 +46,7 @@ const Header = () => {
 </div>
 
 {/* Desktop only: default / object-center */}
-<div onClick={() => {navigate("/home")}} className="hidden lg:block">
+<div onClick={() => {navigate("/")}} className="hidden lg:block">
 <img
           src={Logo2}
           alt="Logo"
@@ -58,7 +58,7 @@ const Header = () => {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-14 text-[16px] text-black font-medium">
-          <a href="/home" className="hover:text-[#DE6328] transition">
+          <a href="/" className="hover:text-[#DE6328] transition">
             Home
           </a>
 
@@ -87,7 +87,7 @@ const Header = () => {
             </div>
           </div>
 
-          <a href="#" className="hover:text-[#DE6328] transition">
+          <a href="/about-us" className="hover:text-[#DE6328] transition">
             About Us
           </a>
           <a href="/contact" className="hover:text-[#DE6328] transition">
@@ -134,7 +134,7 @@ const Header = () => {
 
       {/* Nav Links */}
       <nav className="flex flex-col space-y-6 text-lg font-medium">
-        <a href="/home" onClick={() => setMobileOpen(false)}>
+        <a href="/" onClick={() => setMobileOpen(false)}>
           Home
         </a>
 
@@ -163,7 +163,7 @@ const Header = () => {
           )}
         </div>
 
-        <a href="#" onClick={() => setMobileOpen(false)}>
+        <a href="/about-us" onClick={() => setMobileOpen(false)}>
           About Us
         </a>
 

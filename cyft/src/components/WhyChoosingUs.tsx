@@ -1,6 +1,9 @@
 import arrowLong from "../assets/arrow-long-orange.png";
+import { useNavigate } from "react-router-dom";
 
 export default function WhyChoosingUs() {
+  const navigate = useNavigate();
+
   return (
     <section className="w-full bg-white py-16 px-4 lg:mt-15 mt-[-20px] lg:mb-15 mb-1">
       <div className="max-w-7xl mx-auto">
@@ -20,7 +23,9 @@ export default function WhyChoosingUs() {
               <p className="text-gray-600 text-[16px] leading-relaxed">
                 We work with clear systems and procedures that ensure efficient planning and consistent results.
               </p>
-              <button className="flex items-center gap-2 text-[#DE6328] text-sm font-normal hover:gap-3 transition-all">
+              <button 
+              onClick={() => navigate("/about-us")}
+              className="flex items-center gap-2 text-[#DE6328] text-sm font-normal hover:gap-3 transition-all cursor-pointer">
                 More Info  <img src={arrowLong} alt="Arrow" className="w-auto h-auto justify-right" />
               </button>
             </div>
@@ -31,8 +36,10 @@ export default function WhyChoosingUs() {
               <p className="text-gray-600 text-[16px] leading-relaxed">
                 We deliver services as agreed, meet timelines and maintain standards across all events and operations.
               </p>
-              <button className="flex items-center gap-2 text-[#DE6328] text-sm font-normal hover:gap-3 transition-all">
-                More Info <img src={arrowLong} alt="Arrow" className="w-auto h-auto justify-right" />
+              <button 
+              onClick={() => navigate("/about-us")}
+              className="flex items-center gap-2 text-[#DE6328] text-sm font-normal hover:gap-3 transition-all cursor-pointer">
+                More Info  <img src={arrowLong} alt="Arrow" className="w-auto h-auto justify-right" />
               </button>
             </div>
 
@@ -42,8 +49,10 @@ export default function WhyChoosingUs() {
               <p className="text-gray-600 text-[16px] leading-relaxed">
                 We take responsibility for every assignment with proper supervision, communication and follow through.
               </p>
-              <button className="flex items-center gap-2 text-[#DE6328] text-sm font-normal hover:gap-3 transition-all">
-                More Info <img src={arrowLong} alt="Arrow" className="w-auto h-auto justify-right" />
+              <button 
+              onClick={() => navigate("/about-us")}
+              className="flex items-center gap-2 text-[#DE6328] text-sm font-normal hover:gap-3 transition-all cursor-pointer">
+                More Info  <img src={arrowLong} alt="Arrow" className="w-auto h-auto justify-right" />
               </button>
             </div>
           </div>

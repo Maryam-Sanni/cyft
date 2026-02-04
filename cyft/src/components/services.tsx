@@ -31,7 +31,7 @@ const services = {
       description:
         "We provide structured training and capacity development solutions that empower teams, improve efficiency, and support long-term organizational effectiveness.",
       image: service3,
-      navigate: "/home"
+      navigate: "/"
     },
   } as const;
 

@@ -51,10 +51,12 @@ import {
               <li
               onClick={() => {navigate("/contact")}}
               >Contact Us</li>
-              <li>About Us</li>
               <li
+              onClick={() => {navigate("/about-us")}}
+              >About Us</li>
+              {/* <li
               onClick={() => {navigate("/resources")}}
-              >Resources</li>
+              >Resources</li> */}
             </ul>
           </div>
   
@@ -114,10 +116,14 @@ import {
             <span>Copyright © {new Date().getFullYear()}</span>
   
             <div className="flex gap-6">
-              <span className="cursor-pointer hover:text-gray-700">
+              <span 
+              onClick={() => {navigate("/terms")}}
+              className="cursor-pointer hover:text-gray-700">
                 Terms & Conditions
               </span>
-              <span className="cursor-pointer hover:text-gray-700">
+              <span 
+              onClick={() => {navigate("/privacy-policy")}}
+              className="cursor-pointer hover:text-gray-700">
                 Privacy Policy
               </span>
             </div>
