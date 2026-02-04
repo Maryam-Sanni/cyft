@@ -20,6 +20,7 @@ function App() {
       <Routes>
         {/* <Route path="/" element={<ComingSoon />} /> */}
         <Route path="/" element={<LandingPage />} />
+        <Route path="/home" element={<LandingPage />} />
         <Route path="/connect" element={<Connect />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/events-management" element={<Events />} />
