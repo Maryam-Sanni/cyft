@@ -80,7 +80,9 @@ const Header = () => {
                 className="px-6 py-3 hover:bg-gray-100/70 cursor-pointer">
                   Facility Management
                 </li>
-                <li className="px-6 py-3 hover:bg-gray-100/70 cursor-pointer">
+                <li 
+                onClick={() => {navigate("/training")}}
+                className="px-6 py-3 hover:bg-gray-100/70 cursor-pointer">
                   Human Capacity Development
                 </li>
               </ul>
@@ -158,7 +160,9 @@ const Header = () => {
               <p
               onClick={() => {navigate("/facility-management")}}
               >Facility Management</p>
-              <p>Human Capacity Development</p>
+              <p
+              onClick={() => {navigate("/training")}}
+              >Human Capacity Development</p>
             </div>
           )}
         </div>

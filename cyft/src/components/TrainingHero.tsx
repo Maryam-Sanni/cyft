@@ -4,11 +4,11 @@ import arrowLong from "../assets/arrow-long.png";
 import { motion } from "framer-motion";
 
 // replace these with your real images
-import img1 from "../assets/H1.png";
-import img2 from "../assets/H7.png";
-import img3 from "../assets/H13.png";
-import img4 from "../assets/H9.png";
-import img5 from "../assets/Event1.jpg";
+import img1 from "../assets/H7.png";
+import img2 from "../assets/E2.png";
+import img3 from "../assets/E3.png";
+import img4 from "../assets/E4.png";
+import img5 from "../assets/T1.png";
 
 import type { Variants } from "framer-motion";
 
@@ -75,7 +75,6 @@ const Diamond = () => (
     <path d="M12 2l10 10-10 10L2 12 12 2z" />
   </svg>
 );
-
 
 const icons = [
   {
@@ -221,8 +220,8 @@ const Hero = () => {
       ref={containerRef}
       className="relative min-h-[800px] lg:min-h-[980px] flex items-center justify-center overflow-hidden bg-[#F0EBE9]"
     >
-
-     {/* Decorative icons */}
+      
+      {/* Decorative icons */}
      <div className="absolute inset-0 z-10">
   {icons.map(({ Icon, className, bg, delay }, i) => (
     <motion.div
@@ -300,7 +299,7 @@ const Hero = () => {
       style={{ transformStyle: "preserve-3d" }}
     >
       <img
-        src={img5}
+        src={img1}
         alt=""
         className="w-full h-full object-cover"
       />
@@ -330,7 +329,7 @@ const Hero = () => {
       className="w-[140px] h-[140px]
         rounded-full overflow-hidden bg-white shadow-xl"
     >
-      <img src={img4} className="w-full h-full object-cover" />
+      <img src={img5} className="w-full h-full object-cover" />
     </motion.div>
   </motion.div>
   </motion.div>
@@ -356,26 +355,23 @@ const Hero = () => {
       className="w-[140px] h-[140px]
         rounded-full overflow-hidden bg-white shadow-xl"
     >
-      <img src={img1} className="w-full h-full object-cover" />
+      <img src={img4} className="w-full h-full object-cover" />
     </motion.div>
   </motion.div>
   </motion.div>
 
 </div>
 
-
-
       </div>
 
       {/* Content */}
       <div className="relative z-20 text-center px-6 lg:mt-[-280px] mt-[-350px]">
         <h1 className="text-black text-[32px] md:text-5xl lg:text-[80px] font-bold">
-          Structured End-to-End <br/> Management Services
+        Human Capacity Development
         </h1>
 
         <p className="mt-6 text-black/80 text-md md:text-lg lg:text-xl max-w-xl mx-auto">
-          End-to-end management services built for consistency, accountability
-          and results.
+        Building people, strengthening teams, and <br/> preparing organizations for sustainable growth.
         </p>
 
         <button onClick={() => navigate("/contact")} 
@@ -388,44 +384,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
-
-// import { useState } from "react";
-// import heroImage2 from "../assets/Hero2.png";
-// import heroImage3 from "../assets/Hero3.png";
-// import mobileHero from "../assets/mobile-hero.png";
-// import { Check } from "lucide-react";
-
-    // const [currentHero, setCurrentHero] = useState(heroImage);
-        // const heroImages = [heroImage, heroImage2, heroImage3];
-      {/* Background Image */}
-{/* Mobile only: object-cover */}
-{/* <div className="block lg:hidden">
-  <img
-    src={mobileHero}
-    alt="Hero"
-    className="absolute inset-0 w-full h-full object-cover object-center"
-  />
-</div> */}
-
-{/* Desktop only: default / object-center */}
-       {/* Transparent box with circles */}
-       {/* <div className="hidden absolute h-10 border-1 border-white left-6 lg:left-12 bottom-10 top-2/3 lg:transform lg:-translate-y-1/2 bg-white/20 rounded-xl px-2 py-2 flex gap-3 z-20">
-       {heroImages.map((img, index) => (
-  <button
-    key={index}
-    onClick={() => setCurrentHero(img)}
-    className={`relative w-5 h-5 rounded-full border-2 border-white flex items-center justify-center ${
-      index === 0
-        ? "bg-[#E58411]"
-        : index === 1
-        ? "bg-[#385650]"
-        : "bg-[#D6D3CE]"
-    }`}
-  >
-    {currentHero === img && (
-      <Check className="text-white"/>
-    )}
-  </button>
-))}
-      </div> */}

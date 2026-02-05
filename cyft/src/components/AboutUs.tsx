@@ -11,6 +11,7 @@ import img3 from "../assets/H9.png";
 import OurTeam from "./OurTeam";
 import FAQs from "./FAQs"
 import AboutHero from "./AboutHero"
+import OurStoryNigeria from "./Story";
 
 export const containerVariants: Variants = {
     hidden: {},
@@ -106,7 +107,6 @@ const AboutPage = () => {
             <span className="text-[14px] font-medium tracking-widest text-[#676767] uppercase">
               ABOUT US
             </span>
-
             <h2 className="text-3xl md:text-[42px] font-bold text-gray-900 leading-tight mt-3">
               Our Core Values
             </h2>
@@ -135,7 +135,7 @@ const AboutPage = () => {
                 y: -8,
                 boxShadow: "0px 20px 40px rgba(0,0,0,0.08)",
               }}
-              className="relative overflow-hidden rounded-2xl p-8 bg-white transition-all"
+              className="relative overflow-hidden rounded-2xl p-8 bg-white transition-all border border-gray-100"
             >
               {/* Glow overlay */}
               <div
@@ -171,6 +171,8 @@ const AboutPage = () => {
       </motion.div>
       </div>
 
+      <OurStoryNigeria />
+      
       <div className="w-full lg:py-30 py-10 mt-10 transition-colors duration-300 bg-[#FAD6AD] justify-center">
         <div className="flex">
 

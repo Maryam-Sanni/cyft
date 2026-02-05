@@ -11,6 +11,7 @@ import Gallery from "./components/GalleryPage";
 import AboutUs from "./components/AboutUs";
 import TermsAndConditions from "./components/TermsAndConditions";
 import PrivacyPolicy from "./components/Privacy";
+import Training from "./components/Training";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/terms" element={<TermsAndConditions />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/training" element={<Training />} />
       </Routes>
     </BrowserRouter>
   );

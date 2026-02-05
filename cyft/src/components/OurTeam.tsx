@@ -74,10 +74,10 @@ export default function OurTeam() {
               </div>
 
               {/* Name & Role */}
-              <h3 className="mt-4 text-lg font-semibold text-gray-900">
+              <h3 className="mt-2 text-lg font-semibold text-gray-900">
                 {member.name}
               </h3>
-              <p className="text-sm text-black/90">{member.role}</p>
+              <p className="text-sm mb-4 text-black/90">{member.role}</p>
             </div>
           ))}
         </div>
