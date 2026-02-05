@@ -5,8 +5,11 @@ import Service from "./EventManagementService"
 import ProjectImage from "../assets/ProjectsImage.png";
 import BoothPricing from "./BoothCalculator"
 import Process from "./OurProcessEv"
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+
   return (
     <div>
     <Header />
@@ -15,13 +18,15 @@ const LandingPage = () => {
     <Process />
     <div className="text-center items-center">
     <h2 className="text-2xl md:text-[36px] font-semibold text-gray-900 mt-20">Explore Our Projects</h2>
-    <div className="w-full flex justify-center mt-7 lg:mt-15">
-    <img
-      src={ProjectImage}
-      alt={"Project-Image"}
-      className="w-full h-full object-cover"
-    />
-  </div>
+    <div 
+      onClick={() => {navigate("/gallery")}}
+    className="w-full overflow-hidden mt-7 lg:mt-15 cursor-pointer">
+  <img
+    src={ProjectImage}
+    alt="Project-Image"
+    className="w-full h-full object-cover animate-scroll-left"
+  />
+</div>
   <h2 className="text-2xl md:text-[36px] font-semibold text-gray-900 mt-20 lg:mt-30">Get Cost Estimate</h2>
 <BoothPricing />
 

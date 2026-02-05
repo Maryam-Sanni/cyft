@@ -140,3 +140,16 @@ html {
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-20%); /* adjust distance as needed */
+  }
+}
+
+.animate-scroll-left {
+  animation: scroll-left 10s linear infinite; /* smooth continuous scroll */
+}

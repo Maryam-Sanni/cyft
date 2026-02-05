@@ -60,6 +60,9 @@ export const cardVariants: Variants = {
     { id: 1, tag: "01", color: "#4D46C7", title: "Integrity", description: "We strive to meet customer expectations, follow policies and procedures, and are honest and transparent with customer issues." },
     { id: 2, tag: "02", color: "#EE2A52", title: "Quality", description: "We strive to have a clear understanding of the client’s expectations, budget, and turnaround time; and ensure that the organization’s offerings are fit for purpose." },
     { id: 3, tag: "03", color: "#FAB33F", title: "Teamwork", description: "Our Team has a sense of shared purpose, develop mutual trust and respect with clients, and is constantly willing to uphold accountability, either as individuals or collectively as a team." },
+  ];
+
+  const VALUES2: Value[] = [
     { id: 4, tag: "04", color: "#3FFA3F", title: "Passion", description: "We show the clients a sense of enthusiasm, and a desire to articulate activities creatively to meet the clients’ predetermined objectives." },
     { id: 5, tag: "05", color: "#068399", title: "Innovation", description: "We generate original ideas, collaborate, and improve upon existing solutions to either solve clients’ problems or meet clients’ needs." },
   ];
@@ -117,13 +120,13 @@ const AboutPage = () => {
           </div>
 
       {/* GRID CONTAINER */}
-      <div className="lg:px-50 px-5">
+      <div className="lg:px-60 px-5">
       <motion.div
         variants={containerVariants}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: "-100px" }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20"
+        className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
       >
         {VALUES.map((value) => {
 
@@ -135,7 +138,62 @@ const AboutPage = () => {
                 y: -8,
                 boxShadow: "0px 20px 40px rgba(0,0,0,0.08)",
               }}
-              className="relative overflow-hidden rounded-2xl p-8 bg-white transition-all border border-gray-100"
+              className="relative overflow-hidden rounded-2xl p-8 bg-white transition-all"
+            >
+              {/* Glow overlay */}
+              <div
+  className="absolute inset-0 opacity-0 hover:opacity-100 transition"
+  style={{
+    background: `linear-gradient(135deg, ${value.color}1A, transparent)`
+  }}
+/>
+
+              <div className="relative z-10">
+                {/* Icon */}
+                <motion.div
+                  variants={iconVariants}
+                  style={{
+                    backgroundColor: `${value.color}1A`,
+                  }}
+                  className="w-10 h-10 rounded-full flex items-center font-bold text-[24px] mb-4"
+                >
+                 {value.tag}
+                </motion.div>
+
+                <h3 className="font-semibold text-[16px] lg:text-[18px] mb-2">
+                  {value.title}
+                </h3>
+
+                <p className="text-sm text-gray-600 leading-relaxed mt-10">
+                  {value.description}
+                </p>
+              </div>
+            </motion.div>
+          );
+        })}
+      </motion.div>
+      </div>
+
+      {/* GRID CONTAINER2 */}
+      <div className="flex justify-center px-5 lg:px-100">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-100px" }}
+        className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-20"
+      >
+        {VALUES2.map((value) => {
+
+          return (
+            <motion.div
+              key={value.id}
+              variants={cardVariants}
+              whileHover={{
+                y: -8,
+                boxShadow: "0px 20px 40px rgba(0,0,0,0.08)",
+              }}
+              className="relative overflow-hidden rounded-2xl p-8 bg-white transition-all"
             >
               {/* Glow overlay */}
               <div

@@ -12,6 +12,7 @@ import img7 from "../assets/G12.png";
 import eventImg from "../assets/Event3.jpg"
 import facilityImg from "../assets/G7.png"
 import trainingImg from "../assets/G8.png"
+import { useNavigate } from "react-router-dom";
 
 const item = {
   hidden: { opacity: 0, y: 20 },
@@ -20,6 +21,7 @@ const item = {
 
 export default function Gallery() {
     const [phase, setPhase] = useState("blank");
+    const navigate = useNavigate();
 
     useEffect(() => { 
       // Show gallery after 5s
@@ -113,6 +115,7 @@ export default function Gallery() {
   whileInView={{ opacity: 1, scale: 1 }}
   viewport={{ once: true }}
   transition={{ duration: 0.8, ease: "easeOut" }}
+  onClick={() => {navigate("/events-gallery")}}
 >
   {/* Background image */}
   <img
@@ -164,6 +167,7 @@ export default function Gallery() {
   whileInView={{ opacity: 1, scale: 1 }}
   viewport={{ once: true }}
   transition={{ duration: 0.8, ease: "easeOut" }}
+  onClick={() => {navigate("/facility-gallery")}}
 >
   {/* Background image */}
   <img
@@ -215,6 +219,7 @@ export default function Gallery() {
   whileInView={{ opacity: 1, scale: 1 }}
   viewport={{ once: true }}
   transition={{ duration: 0.8, ease: "easeOut" }}
+  onClick={() => {navigate("/training-gallery")}}
 >
   {/* Background image */}
   <img

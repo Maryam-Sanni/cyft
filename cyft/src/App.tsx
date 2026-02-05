@@ -12,6 +12,9 @@ import AboutUs from "./components/AboutUs";
 import TermsAndConditions from "./components/TermsAndConditions";
 import PrivacyPolicy from "./components/Privacy";
 import Training from "./components/Training";
+import GalleryEvents from "./components/Gallery-Events";
+import GalleryFacility from "./components/Gallery-Facility";
+import GalleryTraining from "./components/Gallery-Training";
 
 function App() {
   return (
@@ -32,6 +35,9 @@ function App() {
         <Route path="/terms" element={<TermsAndConditions />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/training" element={<Training />} />
+        <Route path="/events-gallery" element={<GalleryEvents />} />
+        <Route path="/facility-gallery" element={<GalleryFacility />} />
+        <Route path="/training-gallery" element={<GalleryTraining />} />
       </Routes>
     </BrowserRouter>
   );

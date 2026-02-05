@@ -17,7 +17,9 @@ export default function OurServices() {
     </h3>
     <p className="text-gray-600 max-w-xl text-sm md:text-[18px]">Reliable solutions that ensure efficient operations, maintenance, and a safe, well-managed environment.</p>
     </div>
-    <div className="w-full flex justify-center mt-7 lg:mt-15">
+    <div 
+          onClick={() => {navigate("/gallery")}}
+    className="w-full flex justify-center mt-7 lg:mt-15 cursor-pointer">
     <img
       src={ProjectImage}
       alt={"Project-Image"}
