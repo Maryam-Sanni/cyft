@@ -26,12 +26,12 @@ const services = {
     },
     training: {
       label: "Training",
-      bg: "bg-[#EEF3FF]",
+      bg: "bg-[#F0EBE9]",
       title: "Training & Human Capacity Development",
       description:
         "We provide structured training and capacity development solutions that empower teams, improve efficiency, and support long-term organizational effectiveness.",
       image: service3,
-      navigate: "/"
+      navigate: "/training"
     },
   } as const;
 

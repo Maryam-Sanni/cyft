@@ -38,7 +38,9 @@ import {
               <li
               onClick={() => {navigate("/facility-management")}}
               >Facility Management</li>
-              <li>Training</li>
+              <li
+              onClick={() => {navigate("/training")}}
+              >Training</li>
             </ul>
           </div>
   

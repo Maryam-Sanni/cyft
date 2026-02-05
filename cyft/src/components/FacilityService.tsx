@@ -1,4 +1,4 @@
-import ProjectImage from "../assets/ProjectsImage.png";
+import ProjectImage from "../assets/PictureRoll.png";
 import arrowLong from "../assets/arrow-long.png";
 import { useNavigate } from "react-router-dom";
 
@@ -17,16 +17,15 @@ export default function OurServices() {
     </h3>
     <p className="text-gray-600 max-w-xl text-sm md:text-[18px]">Reliable solutions that ensure efficient operations, maintenance, and a safe, well-managed environment.</p>
     </div>
-    <div 
-          onClick={() => {navigate("/gallery")}}
-    className="w-full flex justify-center mt-7 lg:mt-15 cursor-pointer">
-    <img
-      src={ProjectImage}
-      alt={"Project-Image"}
-      className="w-full h-full object-cover"
-    />
+    <div
+  onClick={() => navigate("/gallery")}
+  className="relative w-full overflow-hidden mt-7 lg:mt-15 cursor-pointer"
+>
+  <div className="marquee">
+    <img src={ProjectImage} alt="Gallery strip" />
+    <img src={ProjectImage} alt="Gallery strip duplicate" />
   </div>
-
+</div>
   <div className="flex justify-center mt-20">
   <button
     onClick={() => navigate("/contact")}
