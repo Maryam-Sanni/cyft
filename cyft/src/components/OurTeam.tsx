@@ -1,6 +1,8 @@
 // import { motion } from "framer-motion";
 import { Mail, Phone } from "lucide-react";
 import member1 from "../assets/person.png";
+import Cayford from "../assets/cayford.png";
+import Uti from "../assets/Uti.jpg";
 
 const TEAM = [
   {
@@ -14,16 +16,16 @@ const TEAM = [
   {
     id: 2,
     name: "Mr Cayford",
-    role: "Operations Lead",
-    image: member1,
+    role: "Events Management Proffesional",
+    image: Cayford,
     email: "cayford@cyftconsulting.com",
     phone: "+234 816 803 0975",
   },
   {
     id: 3,
     name: "Mr Uti",
-    role: "Client Relations Manager",
-    image: member1,
+    role: "Facility Management Proffesional",
+    image: Uti,
     email: "utibe@cyftconsulting.com",
     phone: "+234 814 419 3064",
   },
