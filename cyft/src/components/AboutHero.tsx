@@ -3,29 +3,31 @@ import aboutImg from "../assets/About2.png";
 
 // Carefully written, natural-sounding copy (no AI-ish fluff)
 const words = [
-  { text: "We’re", tone: "dark" },
-  { text: "a", tone: "dark" },
-  { text: "trusted", tone: "dark" },
-  { text: "events", tone: "dark" },
-  { text: "and", tone: "dark" },
-  { text: "facilities", tone: "dark" },
-  { text: "management", tone: "dark" },
-  { text: "company", tone: "dark" },
-  { text: "helping", tone: "dark" },
+  { text: "CYFT", tone: "dark" },
+  { text: "consulting", tone: "dark" },
+  { text: "partners", tone: "dark" },
+  { text: "with", tone: "dark" },
+  { text: "leading", tone: "dark" },
   { text: "organizations", tone: "dark" },
-  { text: "create", tone: "dark" },
-  { text: "impactful", tone: "dark" },
-  { text: "experiences", tone: "dark" },
+  { text: "across", tone: "dark" },
+  { text: "Nigeria's", tone: "dark" },
+  { text: "public", tone: "dark" },
+  { text: "and", tone: "dark" },
+  { text: "private", tone: "dark" },
+  { text: "sectors", tone: "dark" },
+  { text: "to optimize", tone: "dark" },
 
   // softer continuation
-  { text: "that", tone: "light" },
-  { text: "run", tone: "light" },
-  { text: "smoothly,", tone: "light" },
-  { text: "optimize", tone: "light" },
-  { text: "spaces,", tone: "light" },
+  { text: "facilities", tone: "light" },
+  { text: "performance", tone: "light" },
+  { text: "execute,", tone: "light" },
+  { text: "exceptional", tone: "light" },
+  { text: "events", tone: "light" },
+  { text: "and", tone: "light" },
+  { text: "exhibitions,", tone: "light" },
   { text: "and", tone: "light" },
   { text: "strengthen", tone: "light" },
-  { text: "human", tone: "light" },
+  { text: "organizational", tone: "light" },
   { text: "capacity.", tone: "light" },
 ];
 
@@ -53,7 +55,7 @@ export default function HeroSection() {
           Who We Are
         </span>
 
-        <h1 className="text-2xl md:text-4xl font-semibold leading-tight max-w-4xl">
+        <h1 className="text-2xl md:text-4xl font-semibold leading-tight max-w-4xl h-55">
           {words.slice(0, visibleCount).map((word, i) => (
             <span
               key={i}

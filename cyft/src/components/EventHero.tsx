@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 
 // replace these with your real images
 import img1 from "../assets/E1.png";
-import img2 from "../assets/E2.png";
-import img3 from "../assets/E3.png";
+import img2 from "../assets/NE1.png";
+import img3 from "../assets/NE2.png";
 import img4 from "../assets/E4.png";
 import img5 from "../assets/E5.png";
 

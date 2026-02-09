@@ -5,9 +5,9 @@ import { motion } from "framer-motion";
 
 // replace these with your real images
 import img1 from "../assets/F1.png";
-import img2 from "../assets/E2.png";
-import img3 from "../assets/E3.png";
-import img4 from "../assets/E4.png";
+import img2 from "../assets/NF1.png";
+import img3 from "../assets/NF2.png";
+import img4 from "../assets/service2.png";
 import img5 from "../assets/F5.png";
 
 import type { Variants } from "framer-motion";
