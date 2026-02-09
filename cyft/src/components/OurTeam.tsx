@@ -7,7 +7,7 @@ import Uti from "../assets/Uti.jpg";
 const TEAM = [
   {
     id: 1,
-    name: "Mrs Cynthia",
+    name: "Cynthia F.",
     role: "Managing Director",
     image: member1,
     email: "cynthia@cyftconsulting.com",
@@ -15,16 +15,16 @@ const TEAM = [
   },
   {
     id: 2,
-    name: "Mr Cayford",
-    role: "Events Management Proffesional",
+    name: "Cayford D.",
+    role: "Facility Management Proffesional",
     image: Cayford,
     email: "cayford@cyftconsulting.com",
     phone: "+234 816 803 0975",
   },
   {
     id: 3,
-    name: "Mr Uti",
-    role: "Facility Management Proffesional",
+    name: "Utibe E.",
+    role: "Events Management Proffesional",
     image: Uti,
     email: "utibe@cyftconsulting.com",
     phone: "+234 814 419 3064",
