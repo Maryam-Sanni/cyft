@@ -1,9 +1,9 @@
-import { Bell, LogOutIcon } from "lucide-react";
+import { Bell, LogOut } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Upload } from "lucide-react";
-import Task from "../assets/Task.png";
-import Staff from "../assets/Staff.png";
+import Task from "../../assets/Task.png";
+import Staff from "../../assets/Staff.png";
 import { useNavigate } from "react-router-dom";
   
   const taskData: Record<string, any[]> = {
@@ -237,30 +237,15 @@ const handleMarkCompleted = (status: string, index: number) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1">
   {/* Bell */}
-  <div
-    onClick={() => navigate("/staff-announcement")}
-    className="p-2 rounded-full hover:bg-gray-200 transition cursor-pointer"
-  >
-    <Bell
-      className="w-6 h-6"
-      fill="#DE6328"
-      stroke="none"
-    />
-  </div>
+  <div onClick={() => navigate("/staff-announcement")} className="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-300 transition">
+          <Bell size={18} />
+        </div>
 
-  {/* Logout */}
-  <div
-    onClick={() => navigate("/staff-login")}
-    className="p-2 rounded-full hover:bg-gray-200 transition cursor-pointer ml-[-10px]"
-  >
-    <LogOutIcon
-      className="w-6 h-6"
-      fill="none"
-      stroke="#6B7280"
-    />
-  </div>
+        <div onClick={() => navigate("/staff")} className="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-300 transition">
+          <LogOut size={18} />
+        </div>
 </div>
       </div>
 

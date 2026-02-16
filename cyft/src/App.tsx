@@ -15,9 +15,11 @@ import Training from "./components/Training";
 import GalleryEvents from "./components/Gallery-Events";
 import GalleryFacility from "./components/Gallery-Facility";
 import GalleryTraining from "./components/Gallery-Training";
-import StaffDashboard from "./components/staffDashboard";
-import StaffLogin from "./components/StaffLogin";
-import StaffAnnouncement from "./components/staffAnnouncement";
+import StaffDashboard from "./components/Staff/staffDashboard";
+import StaffLogin from "./components/Staff/StaffLogin";
+import StaffAnnouncement from "./components/Staff/staffAnnouncement";
+import AdminDashboard from "./components/Staff/staffAdmin"
+import AllStaffs from "./components/Staff/staffAll";
 
 function App() {
   return (
@@ -42,8 +44,10 @@ function App() {
         <Route path="/facility-gallery" element={<GalleryFacility />} />
         <Route path="/training-gallery" element={<GalleryTraining />} />
         <Route path="/staff-dashboard" element={<StaffDashboard />} />
-        <Route path="/staff-login" element={<StaffLogin />} />
+        <Route path="/staff" element={<StaffLogin />} />
         <Route path="/staff-announcement" element={<StaffAnnouncement />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/admin-staff" element={<AllStaffs />} />
       </Routes>
     </BrowserRouter>
   );

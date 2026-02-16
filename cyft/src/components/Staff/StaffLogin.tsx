@@ -10,8 +10,10 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     setLoading(true);
@@ -19,20 +21,26 @@ const Login = () => {
     setTimeout(() => {
       setLoading(false);
   
-      // 🔴 MOCK AUTH LOGIC (replace with real API later)
-      const isValid = true;
+      // ✅ STAFF CREDENTIALS
+      const staffEmail = "staff@cyftconsulting.com";
+      const staffPassword = "Cyft@2026";
   
-      if (!isValid) {
-        setError("Invalid credentials. Please try again.");
+      // ✅ ADMIN CREDENTIALS
+      const adminEmail = "info@cyftconsulting.com";
+      const adminPassword = "Cyft@2026_Ad";
+  
+      if (email === staffEmail && password === staffPassword) {
+        navigate("/staff-dashboard");
         return;
       }
   
-      // ✅ Role-based navigation
-      if (role === "staff") {
-        navigate("/staff-dashboard");
-      } else {
+      if (email === adminEmail && password === adminPassword) {
         navigate("/admin-dashboard");
+        return;
       }
+  
+      // ❌ Invalid login
+      setError("Invalid email or password.");
     }, 1500);
   };  
 
@@ -90,6 +98,8 @@ const Login = () => {
                   <input
                     type="email"
                     placeholder="Email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full h-12 pl-12 pr-4 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#DE6328]"
                     required
                   />
@@ -102,6 +112,8 @@ const Login = () => {
                     <input
                       type={showPassword ? "text" : "password"}
                       placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       className="w-full h-12 pl-12 pr-12 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#DE6328]"
                       required
                     />

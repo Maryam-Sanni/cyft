@@ -14,7 +14,7 @@ import {
   Waves,            // Water Management
   Layers,           // Integrated FM
   AlertTriangle,    // Compliance & Safety
-  Siren             // Emergency
+  BookOpenText          // Emergency
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Variants } from "framer-motion";
@@ -69,7 +69,7 @@ const SERVICES: Service[] = [
   { id: 4, title: "Structural Maintenance", icon: Building2, description: "Ongoing structural upkeep to ensure building integrity and safety." },
   { id: 5, title: "Cleaning Services", icon: SprayCan, description: "Professional cleaning solutions for hygienic and healthy environments." },
   { id: 6, title: "Security Services", icon: ShieldCheck, description: "Comprehensive physical and operational security management." },
-  { id: 7, title: "Soft FM – Landscaping", icon: Trees, description: "Landscape design and maintenance for functional outdoor spaces." },
+  { id: 7, title: "Landscaping", icon: Trees, description: "Landscape design and maintenance for functional outdoor spaces." },
   { id: 8, title: "Waste Management", icon: Trash2, description: "Efficient waste collection, disposal and sustainability practices." },
   { id: 9, title: "BMS Systems", icon: Cpu, description: "Building Management Systems for centralized monitoring and control." },
   { id: 10, title: "IoT Sensors", icon: Wifi, description: "Smart sensor integration for real-time facility monitoring." },
@@ -78,7 +78,7 @@ const SERVICES: Service[] = [
   { id: 13, title: "Water Management", icon: Waves, description: "Smart water usage, monitoring and conservation solutions." },
   { id: 14, title: "Integrated FM Solutions", icon: Layers, description: "End-to-end facility management under a single coordinated system." },
   { id: 15, title: "Compliance & Safety", icon: AlertTriangle, description: "Ensuring regulatory compliance and workplace safety standards." },
-  { id: 16, title: "Emergency Services", icon: Siren, description: "Rapid-response support for critical and emergency situations." },
+  { id: 16, title: "Facility Audit", icon: BookOpenText, description: "Comprehensive facility assessment to identify risks, inefficiencoes, and improvement opportunties." },
 ];
 
 
