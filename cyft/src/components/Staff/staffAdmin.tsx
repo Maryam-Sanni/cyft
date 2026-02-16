@@ -71,17 +71,6 @@ export const tasks: Task[] = [
 
   // 🟢 COMPLETED TASKS
   {
-    id: 4,
-    title: "Contact Zenith Bank",
-    description:
-      "Reach out to Zenith Bank concerning their exhibition booth requirements and provide a cost breakdown.",
-    assignedTo: "David Smith",
-    assignedDate: "28-02-2025",
-    status: "completed",
-    submittedReport:
-      "Client has agreed to the proposed cost structure. Awaiting final written approval. Invoice drafted and attached.",
-  },
-  {
     id: 5,
     title: "Confirm Catering Services",
     description:
@@ -255,7 +244,7 @@ export default function AdminDashboard() {
         <StatCard
           icon={<Plus size={18} />}
           title="Ongoing Tasks"
-          value="07"
+          value="03"
           status="ongoing"
           onSelect={setActiveStatus}
           button="+ Add New"
@@ -276,7 +265,7 @@ export default function AdminDashboard() {
           title="Rejected Tasks"
           status="rejected"
           onSelect={setActiveStatus}
-          value="05"
+          value="03"
         />
 
         {/* Staff */}
@@ -285,7 +274,7 @@ export default function AdminDashboard() {
           status=""
           title="Total Number of Staffs"
           onSelect={() => {}}
-          value="24"
+          value="06"
         />
       </div>
       <TaskPage status={activeStatus}/>
