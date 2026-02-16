@@ -57,7 +57,7 @@ export default function TaskDetailsModal({ task, onClose }: Props) {
               RETURN TASK
             </button>
 
-            <button className="flex-1 bg-orange-500 text-white rounded-full py-2 hover:bg-orange-600 transition">
+            <button className="flex-1 bg-orange-500 text-white rounded-full py-2 hover:bg-orange-400 transition">
               {task.status === "rejected"
                 ? "REVIEW AS FINISHED"
                 : "MARK AS FINISHED"}

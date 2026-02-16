@@ -160,7 +160,7 @@ export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-[#f3efed] p-4 md:p-8">
       {/* Header */}
-      <div className="hidden md:flex justify-center mb-3 px-4 py-2 gap-6">
+      <div className="flex justify-center mb-3 px-4 py-2 gap-6">
             {/* Dashboard */}
       <button
         onClick={() => navigate("/admin-dashboard")}

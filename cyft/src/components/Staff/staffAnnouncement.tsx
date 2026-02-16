@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, X } from "lucide-react";
 
 type Notification = {
   id: number;
@@ -134,11 +134,11 @@ export default function NotificationsPage() {
         </div>
 
         <button
-          onClick={() => setOpenCreate(true)}
-          className="bg-[#DE6328] text-white px-4 py-2 rounded-md text-sm font-medium hover:opacity-90"
-        >
-          Create Announcement
-        </button>
+  onClick={() => setOpenCreate(true)}
+  className="bg-[#DE6328] text-white rounded-full text-3xl font-medium hover:opacity-90 w-10 h-10 pt-1 flex items-center justify-center"
+>
+  +
+</button>
       </div>
 
       {/* Notification List */}
@@ -243,18 +243,25 @@ export default function NotificationsPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4"
           >
+
             <motion.div
               initial={{ scale: 0.95 }}
               animate={{ scale: 1 }}
-              className="bg-[#F0EBE9] rounded-xl p-6 w-full max-w-md"
+              className="w-full max-w-lg bg-white rounded-3xl shadow-2xl p-8 relative animate-scaleIn"
             >
-              <h3 className="text-lg font-semibold mb-4">
-                Create Announcement
-              </h3>
+                          <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-semibold">Create Announcement</h2>
+          <button
+            onClick={() => setOpenCreate(false)}
+            className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100 transition"
+          >
+            <X size={16} />
+          </button>
+        </div>
 
-              <div className="space-y-4">
+              <div className="space-y-4 mt-20 mb-20">
                 <input
           type="text"
           placeholder="Announcement Title"
@@ -278,17 +285,11 @@ export default function NotificationsPage() {
         </select>
 <button
           onClick={handleSend}
-          className="w-full bg-[#DE6328] text-white py-2 rounded-md font-medium"
+          className="mt-6 w-full bg-[#E06222] hover:bg-orange-400 text-white font-medium py-3 rounded-full transition-all duration-200 shadow-md hover:shadow-lg"
         >
           Send Announcement
         </button>
 
-                <button
-                  onClick={() => setOpenCreate(false)}
-                  className="w-full text-sm text-gray-600"
-                >
-                  Cancel
-                </button>
               </div>
             </motion.div>
           </motion.div>

@@ -72,7 +72,7 @@ export default function AssignTaskModal({
 
 
           {/* Assign Button */}
-          <button className="w-full bg-[#E06222] hover:bg-orange-600 text-white font-medium py-3 rounded-full transition-all duration-200 shadow-md hover:shadow-lg">
+          <button className="w-full bg-[#E06222] hover:bg-orange-400 text-white font-medium py-3 rounded-full transition-all duration-200 shadow-md hover:shadow-lg">
             ASSIGN
           </button>
 
