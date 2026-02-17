@@ -1,15 +1,40 @@
-import { tasks } from "./staffAdmin";
 import type { Task } from "../Staff/staffAdmin";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TaskDetailsModal from "../popups/TaskDetailsModal";
 
 export default function AdminTasksPage({
     status,
   }: {
-    status: "ongoing" | "completed" | "rejected" | null;
+    status: "IN_PROGRESS" | "COMPLETED" | "REJECTED" | null;
   }) {
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+    const [tasks, setTasks] = useState<Task[]>([]);
+
+    const fetchAllTasks = async () => {
+      const token = localStorage.getItem("token");
+    
+      const res = await fetch("http://localhost:5000/tasks/all", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    
+      if (!res.ok) throw new Error("Failed to fetch tasks");
+    
+      const data = await res.json();
+      setTasks(data); // tasks = state in your component
+      localStorage.setItem("tasks", JSON.stringify(data)); 
+    };
+    
+  useEffect(() => {
+    fetchAllTasks();
+}, []);
   
+const ongoing = tasks.filter(t => t.status === "IN_PROGRESS");
+localStorage.setItem("ongoingCount", ongoing.length.toString());
+const completed = tasks.filter(t => t.status === "COMPLETED");
+localStorage.setItem("completedCount", completed.length.toString());
+const rejected = tasks.filter(t => t.status === "REJECTED");
+localStorage.setItem("rejectedCount", rejected.length.toString());
+
     // 👇 show nothing if no status selected
     if (!status) return null;
   
@@ -18,9 +43,9 @@ export default function AdminTasksPage({
     );
   
     const pageTitle =
-      status === "ongoing"
+      status === "IN_PROGRESS"
         ? "Ongoing Tasks"
-        : status === "completed"
+        : status === "COMPLETED"
         ? "Completed Tasks"
         : "Rejected Tasks";
   
@@ -50,8 +75,8 @@ export default function AdminTasksPage({
                   <td className="p-4 text-gray-600">
                     {task.description.slice(0, 40)}...
                   </td>
-                  <td className="p-4">{task.assignedTo}</td>
-                  <td className="p-4">{task.assignedDate}</td>
+                  <td className="p-4">{task.staffName}</td>
+                  <td className="p-4">{task.createdAt}</td>
                   <td className="p-4 text-center">
                     <button
                       onClick={() => setSelectedTask(task)}
@@ -68,6 +93,7 @@ export default function AdminTasksPage({
   
         <TaskDetailsModal
           task={selectedTask}
+          fetchAllTasks={fetchAllTasks}
           onClose={() => setSelectedTask(null)}
         />
       </div>

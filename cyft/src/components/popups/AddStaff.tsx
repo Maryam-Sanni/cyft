@@ -1,22 +1,67 @@
 import { X, ChevronDown } from "lucide-react";
-// import { useState } from "react";
+import { useState } from "react";
 
 interface AssignTaskModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onStaffCreated?: () => void; // callback to refresh staff list
 }
 
 export default function AssignTaskModal({
   isOpen,
   onClose,
+  onStaffCreated,
 }: AssignTaskModalProps) {
-//   const [form, setForm] = useState({
-//     title: "",
-//     description: "",
-//     staff: "",
-//     dueDate: "",
-//     file: null,
-//   });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    department: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [tempPassword, setTempPassword] = useState("");
+
+  if (!isOpen) return null;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    setTempPassword("");
+
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch("http://localhost:5000/staff", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.message || "Failed to create staff");
+      }
+
+      const data = await res.json();
+      setTempPassword(data.tempPassword);
+      setForm({ name: "", email: "", department: "" });
+
+      // Optional: Refresh staff list in parent
+      if (onStaffCreated) onStaffCreated();
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -38,31 +83,41 @@ export default function AssignTaskModal({
         </div>
 
         {/* Form */}
-        <div className="space-y-5 mt-20 mb-20">
+        <form onSubmit={handleSubmit} className="space-y-5 mt-20 mb-20">
 
           {/* Name */}
           <input
-            type="text"
-            placeholder="Name"
+    type="text"
+    name="name"
+    placeholder="Name"
+    value={form.name}
+    onChange={handleChange}
             className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400"
           />
 
   {/* Email */}
   <input
-            type="text"
-            placeholder="Email"
+    type="email"
+    name="email"
+    placeholder="Email"
+    value={form.email}
+    onChange={handleChange}
             className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-400"
           />
 
           {/* Assign Staff */}
           <div className="relative">
             <select
+                          name="department"
+                          value={form.department}
+                          onChange={handleChange}
+                          required
               className="w-full border border-gray-200 rounded-xl px-4 py-3 appearance-none focus:outline-none focus:ring-2 focus:ring-orange-400"
             >
-              <option value="">Department</option>
-              <option>Event Management</option>
-              <option>Facility Management</option>
-              <option>Human Capacity Development</option>
+              <option value="">Select Department</option>
+              <option value="Event Management">Event Management</option>
+              <option value="Facility Management">Facility Management</option>
+              <option value="Human Capacity Development">Human Capacity Development</option>
             </select>
             <ChevronDown
               size={16}
@@ -70,13 +125,26 @@ export default function AssignTaskModal({
             />
           </div>
 
+          {/* Error Message */}
+          {error && <p className="text-red-500">{error}</p>}
+
+          {/* Success Message */}
+          {tempPassword && (
+            <p className="text-green-600">
+              Staff created! Temporary password: <b>{tempPassword}</b>
+            </p>
+          )}
 
           {/* Assign Button */}
-          <button className="w-full bg-[#E06222] hover:bg-orange-400 text-white font-medium py-3 rounded-full transition-all duration-200 shadow-md hover:shadow-lg">
-            ASSIGN
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-[#E06222] hover:bg-orange-400 text-white font-medium py-3 rounded-full transition-all duration-200 shadow-md hover:shadow-lg"
+          >
+            {loading ? "Creating..." : "CREATE STAFF"}
           </button>
 
-        </div>
+        </form>
       </div>
     </div>
   );

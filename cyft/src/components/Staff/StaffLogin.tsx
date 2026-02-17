@@ -3,45 +3,52 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = import.meta.env.VITE_API_URL
+
 const Login = () => {
   const [forgotPassword, setForgotPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [role, setRole] = useState<"staff" | "admin">("staff");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     setLoading(true);
   
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      const res = await fetch("http://localhost:5000/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
   
-      // ✅ STAFF CREDENTIALS
-      const staffEmail = "staff@cyftconsulting.com";
-      const staffPassword = "Cyft@2026";
-  
-      // ✅ ADMIN CREDENTIALS
-      const adminEmail = "info@cyftconsulting.com";
-      const adminPassword = "Cyft@2026_Ad";
-  
-      if (email === staffEmail && password === staffPassword) {
-        navigate("/staff-dashboard");
-        return;
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Login failed");
       }
   
-      if (email === adminEmail && password === adminPassword) {
+      const data = await res.json();
+  
+      // Save token for future requests
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("UserEmail", data?.user?.email || "");
+  
+      // Redirect based on role
+      if (data.user.role === "ADMIN") {
         navigate("/admin-dashboard");
-        return;
+      } else if (data.user.role === "STAFF") {
+        navigate("/staff-dashboard");
       }
   
-      // ❌ Invalid login
-      setError("Invalid email or password.");
-    }, 1500);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };  
 
   return (
@@ -52,25 +59,6 @@ const Login = () => {
         <div className="p-8 sm:p-12 flex items-center justify-center">
           <div className="w-full max-w-md">
 
-            {/* Role Switch */}
-            {!forgotPassword && (
-              <div className="flex mb-6 bg-gray-100 rounded-xl p-1">
-                {["staff", "admin"].map((r) => (
-                  <button
-                    key={r}
-                    onClick={() => setRole(r as any)}
-                    className={`flex-1 py-2 rounded-lg text-sm font-medium transition ${
-                      role === r
-                        ? "bg-white shadow text-[#DE6328]"
-                        : "text-gray-500"
-                    }`}
-                  >
-                    {r === "staff" ? "Staff Login" : "Admin Login"}
-                  </button>
-                ))}
-              </div>
-            )}
-
             {/* Heading */}
             <h1 className="text-3xl font-bold mb-2">
               {forgotPassword ? "Forgot Password" : "Welcome Back"}
@@ -78,7 +66,7 @@ const Login = () => {
             <p className="text-gray-600 mb-8">
               {forgotPassword
                 ? "Enter your email to receive reset instructions."
-                : `Login as ${role}`}
+                : `Login as Admin or Staff`}
             </p>
 
             {/* Animated Form */}

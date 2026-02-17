@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Bell,
   Search,
@@ -11,48 +11,18 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { LayoutDashboard, UsersRound } from "lucide-react";
 import AddStaff from "../popups/AddStaff";
 
-const staffData = [
-  {
-    name: "Chinedu Okafor",
-    email: "chinedu.okafor@gmail.com",
-    department: "Facility Management",
-    date: "28-02-2025",
-  },
-  {
-    name: "Aisha Bello",
-    email: "aisha.bello@gmail.com",
-    department: "Human Capacity Development",
-    date: "28-02-2025",
-  },
-  {
-    name: "Tolu Adeyemi",
-    email: "tolu.adeyemi@gmail.com",
-    department: "Events Management",
-    date: "28-02-2025",
-  },
-  {
-    name: "Emeka Nwosu",
-    email: "emeka.nwosu@gmail.com",
-    department: "Facility Management",
-    date: "28-02-2025",
-  },
-  {
-    name: "Zainab Ibrahim",
-    email: "zainab.ibrahim@gmail.com",
-    department: "Human Capacity Development",
-    date: "28-02-2025",
-  },
-  {
-    name: "David Olanrewaju",
-    email: "david.olanrewaju@gmail.com",
-    department: "Events Management",
-    date: "28-02-2025",
-  },
-];
+interface Staff {
+  id: string;
+  email: string;
+  name: string;
+  department: string;
+  isActive: boolean;
+  dateCreated: string;
+}
 
 const tabs = [
   "All Staff",
-  "Events Management",
+  "Event Management",
   "Facility Management",
   "Human Capacity Development",
 ];
@@ -64,6 +34,58 @@ export default function StaffPage() {
   const location = useLocation();
   const [open, setOpen] = useState(false);
   const isActive = (path: string) => location.pathname === path;
+  const [staffData, setStaffData] = useState<Staff[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStaff = async () => {
+      const token = localStorage.getItem("token"); // Admin JWT
+      try {
+        const res = await fetch("http://localhost:5000/staff", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch staff");
+        }
+
+        const data: Staff[] = await res.json();
+        setStaffData(data);
+      } catch (err: any) {
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStaff();
+  }, []);
+
+  const handleDelete = async (staffId: string, staffEmail: string) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this staff?");
+    if (!confirmDelete) return;
+  
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`http://localhost:5000/staff/${staffId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ id: staffId, email: staffEmail }), // <-- send email too
+      });
+  
+      if (!res.ok) throw new Error("Failed to delete staff");
+  
+      alert("Staff deleted successfully!");
+      setStaffData(prev => prev.filter(staff => staff.id !== staffId));
+    } catch (err: any) {
+      alert(err.message);
+    }
+  };
+  
+  
+  if (loading) return <p>Loading staff...</p>;
 
   const baseClasses =
     "text-md flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-200";
@@ -77,30 +99,37 @@ export default function StaffPage() {
   const filteredStaff =
     activeTab === "All Staff"
       ? staffData
-      : staffData.filter(
+      : staffData?.filter(
           (staff) => staff.department === activeTab
         );
 
-  const searchedStaff = filteredStaff.filter((staff) =>
-    staff.name.toLowerCase().includes(search.toLowerCase())
-  );
+        const searchedStaff = filteredStaff.filter((staff) =>
+          (staff.name?.toLowerCase() || staff.email.toLowerCase()).includes(search.toLowerCase())
+        );        
 
-  function getInitials(name: string) {
-    const names = name.split(" ");
-    return names[0][0] + names[1][0];
-  }
-  
-  function getAvatarColor(name: string) {
-    const colors = [
-      "bg-orange-200 text-orange-700",
-      "bg-blue-200 text-blue-700",
-      "bg-green-200 text-green-700",
-      "bg-purple-200 text-purple-700",
-      "bg-pink-200 text-pink-700",
-    ];
-    const index = name.charCodeAt(0) % colors.length;
-    return colors[index];
-  }
+// Get initials safely
+function getInitials(name: string | null) {
+  if (!name) return "??"; // fallback for null/empty
+  const names = name.split(" ");
+  if (names.length === 1) return names[0][0].toUpperCase();
+  return (names[0][0] + names[1][0]).toUpperCase();
+}
+
+// Get avatar color safely
+function getAvatarColor(name: string | null) {
+  const colors = [
+    "bg-orange-200 text-orange-700",
+    "bg-blue-200 text-blue-700",
+    "bg-green-200 text-green-700",
+    "bg-purple-200 text-purple-700",
+    "bg-pink-200 text-pink-700",
+  ];
+
+  if (!name || name.length === 0) return colors[0]; // fallback color
+
+  const index = name.charCodeAt(0) % colors.length;
+  return colors[index];
+}
   
   return (
     <div className="min-h-screen bg-[#f3efed] p-4 md:p-8">
@@ -153,7 +182,7 @@ export default function StaffPage() {
           <Bell size={18} />
         </div>
 
-        <div onClick={() => navigate("/staff-login")} className="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-300 transition">
+        <div onClick={() => navigate("/staff")} className="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-300 transition">
           <LogOut size={18} />
         </div>
         </div>
@@ -237,10 +266,11 @@ export default function StaffPage() {
                   </td>
 
                   <td className="text-[16px]">{staff.department}</td>
-                  <td className="text-[16px]">{staff.date}</td>
+                  <td className="text-[16px]">{staff.dateCreated}</td>
 
                   <td className="text-right">
-                    <button className="p-2 rounded-lg hover:shadow hover:bg-red-50 transition">
+                    <button onClick={() => handleDelete(staff.id, staff.email)}
+                    className="p-2 rounded-lg hover:shadow hover:bg-red-50 transition">
                       <Trash2
                         size={16}
                         className="text-gray-600"

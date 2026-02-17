@@ -6,73 +6,26 @@ import Task from "../../assets/Task.png";
 import Staff from "../../assets/Staff.png";
 import { useNavigate } from "react-router-dom";
   
-  const taskData: Record<string, any[]> = {
-    "Tasks In Progress": [
-        {
-            title: "Event Logistics Coordination",
-            description:
-              "Coordinate all logistics for the upcoming corporate event, including venue setup, equipment arrangement, vendor follow-up, and on-site support. Ensure timelines are met, resources are available, and any issues are promptly escalated and resolved.",
-            deadline: "18-02-2026",
-            status: "Tasks In Progress",
-            actionLabel: "Submit Logistics Report",
-          },
-          {
-            title: "Training Materials Preparation",
-            description:
-              "Prepare and review training materials for the upcoming staff development session. This includes presentation slides, handouts, and reference documents, ensuring all content aligns with training objectives and organizational standards.",
-            deadline: "02-03-2026",
-            status: "Tasks In Progress",
-            actionLabel: "Submit Training Review",
-          },
-          {
-            title: "Staff Training Attendance Report",
-            description:
-              "Prepare and submit the attendance and participation report for the last completed training program. The report should include attendance records, participant feedback summaries, and any notable observations.",
-            deadline: "16-03-2026",
-            status: "Tasks In Progress",
-            actionLabel: "Submit Attendance Report",
-          },
-    ],
-  
-    "Tasks Completed": [
-        {
-            title: "Facility Inspection & Maintenance Review",
-            description:
-              "Conduct routine inspection of assigned facilities to assess cleanliness, safety compliance, and equipment functionality. Document findings, coordinate with maintenance teams where required, and provide progress updates on identified issues.",
-            status: "Tasks Completed",
-            deadline: "18-02-2026",
-            actionLabel: "Update Inspection Status",
-            submittedDate: "31-01-2026",
-    submission: {
-      text: "I submitted the draft report with partial attendance data and my notes on operational efficiency.",
-      files: ["draft_evaluation.pdf", "attendance_notes.xlsx"]
-    }
-          },
-    ], 
-   "Tasks Rejected": [
-  {
-    title: "Post-Event Performance Evaluation",
-    description:
-      "Compile and submit a post-event evaluation report covering attendance, operational efficiency, challenges encountered, and recommendations for improvement. This report supports continuous improvement for future events.",
-    status: "Tasks Rejected",
-    deadline: "18-02-2026",
-    actionLabel: "View Evaluation Report",
-    rejectionReason:
-      "Report was rejected because attendance data was incomplete and the analysis lacked key metrics.",
-    submittedDate: "31-01-2026",
-    submission: {
-      text: "I submitted the draft report with partial attendance data and my notes on operational efficiency.",
-      files: ["draft_evaluation.pdf", "attendance_notes.xlsx"]
-    }
-  }
-],
-  };
-  
+export interface Task {
+  id: string;
+  title: string;
+  description: string;
+  assignedTo: string;
+  staffName: string;
+  assignedDate: string;
+  status: "IN_PROGRESS" | "COMPLETED" | "REJECTED" | null;
+  submissionText?: string;
+  submissionFiles?: string;
+  rejectionReason?: string;
+  reviewStatus?: "PENDING" | "APPROVED" | "REJECTED";
+  createdAt: string;
+  submissionId: string;
+}
 
 export default function StaffDashboard() {
     const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
     const navigate = useNavigate();
-
+    const UserEmail = localStorage.getItem("UserEmail")
     const STAT_ORDER = [
         "Tasks Assigned",
         "Tasks In Progress",
@@ -80,21 +33,84 @@ export default function StaffDashboard() {
         "Tasks Rejected",
       ] as const;
       
-      const [tasksState, setTasksState] = useState(taskData);
-
-      const derivedTaskData = useMemo((): Record<typeof STAT_ORDER[number], any[]> => {
-        const tasksAssigned = Object.entries(tasksState)
-          .flatMap(([status, tasks]) =>
-            tasks.map((task) => ({ ...task, status }))
-          );
-      
-        return {
-          "Tasks Assigned": tasksAssigned,
-          "Tasks In Progress": tasksState["Tasks In Progress"] || [],
-          "Tasks Completed": tasksState["Tasks Completed"] || [],
-          "Tasks Rejected": tasksState["Tasks Rejected"] || [],
+      const [tasksState, setTasksState] = useState<Record<typeof STAT_ORDER[number], any[]>>({
+        "Tasks Assigned": [],
+        "Tasks In Progress": [],
+        "Tasks Completed": [],
+        "Tasks Rejected": [],
+      });      
+      const statusMap: Record<string, keyof typeof derivedTaskData> = {
+        IN_PROGRESS: "Tasks In Progress",
+        COMPLETED: "Tasks Completed",
+        REJECTED: "Tasks Rejected",
+      };      
+      const mapFetchedTasksToState = (fetchedTasks: any[]) => {
+        const newState: Record<typeof STAT_ORDER[number], any[]> = {
+          "Tasks Assigned": [], // could fill in later if needed
+          "Tasks In Progress": [],
+          "Tasks Completed": [],
+          "Tasks Rejected": [],
         };
-      }, [tasksState]);          
+      
+        fetchedTasks.forEach((task) => {
+          const key = statusMap[task.status] || "Tasks Assigned";
+      
+          newState[key].push({
+            ...task,
+            actionLabel:
+              task.status === "IN_PROGRESS"
+                ? "Submit Report"
+                : task.status === "COMPLETED"
+                ? "Update Report"
+                : "View Report",
+            submittedDate: task.submissionText ? task.createdAt : undefined,
+            submission: task.submissionText
+              ? {
+                  text: task.submissionText,
+                  files: task.submissionFiles || [],
+                }
+              : undefined,
+          });
+        });
+      
+        return newState;
+      };
+      
+      const fetchMyTasks = async () => {
+        const token = localStorage.getItem("token");
+      
+        const res = await fetch("http://localhost:5000/tasks/my-tasks", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      
+        if (!res.ok) throw new Error("Failed to fetch tasks");
+      
+        const data = await res.json();
+      
+        // map backend tasks to your dashboard state
+        const mappedState = mapFetchedTasksToState(data);
+      
+        setTasksState(mappedState); // updates derivedTaskData automatically
+      };        
+
+  useEffect(() => {
+    fetchMyTasks();
+}, []);
+
+const derivedTaskData = useMemo((): Record<typeof STAT_ORDER[number], any[]> => {
+  const tasksAssigned = Object.entries(tasksState)
+    .flatMap(([status, tasks]) =>
+      tasks.map((task) => ({ ...task, status }))
+    );
+
+  return {
+    "Tasks Assigned": tasksAssigned,
+    "Tasks In Progress": tasksState["Tasks In Progress"] || [],
+    "Tasks Completed": tasksState["Tasks Completed"] || [],
+    "Tasks Rejected": tasksState["Tasks Rejected"] || [],
+  };
+}, [tasksState]);
+        
       
       const [activeStat, setActiveStat] = useState<typeof STAT_ORDER[number]>(
         "Tasks Assigned"
@@ -185,42 +201,60 @@ export default function StaffDashboard() {
         );
       };      
     
-const [taskTexts, setTaskTexts] = useState<Record<string, string>>({});
+// State for task reports and files
+const [taskTexts, setTaskTexts] = useState<{ [key: string]: string }>({});
+const [taskFiles, setTaskFiles] = useState<{ [key: string]: File[] }>({});
 
+// Handle text change
 const handleTextChange = (status: string, index: number, value: string) => {
-    const taskKey = `${status}-${index}`;
-    setTaskTexts((prev) => ({ ...prev, [taskKey]: value }));
-  };  
+  const key = `${status}-${index}`;
+  setTaskTexts((prev) => ({ ...prev, [key]: value }));
+};
 
-// Handle marking task as completed
-const handleMarkCompleted = (status: string, index: number) => {
-    const taskToMove = tasksState[status][index];
-  
-    const taskKey = `${status}-${index}`;
-    taskToMove.submission = {
-      text: taskTexts[taskKey] || taskToMove.submission?.text || "",
-      files: taskToMove.submission?.files || [],
-    };
-  
-    setTasksState((prev) => {
-      const newPrev = { ...prev };
-  
-      // Remove task from current status
-      newPrev[status] = [...newPrev[status]];
-      newPrev[status].splice(index, 1);
-  
-      // Add to Tasks Completed
-      newPrev["Tasks Completed"] = [
-        ...newPrev["Tasks Completed"],
-        { ...taskToMove, status: "Tasks Completed", submittedDate: new Date().toLocaleDateString("en-GB") },
-      ];
-  
-      return newPrev;
+// Handle file upload
+const handleFileChange = (status: string, index: number, files: FileList | null) => {
+  if (!files) return;
+  const key = `${status}-${index}`;
+  setTaskFiles((prev) => ({ ...prev, [key]: Array.from(files) }));
+};
+
+const handleSubmitTask = async (task: any, index: number) => {
+  const token = localStorage.getItem("token");
+
+  const key = `${task.status}-${index}`;
+  const text = taskTexts[key] ?? "";
+  const files = taskFiles[key] ?? [];
+
+  // Convert files to just names or upload them to server first
+  // For simplicity, just send file names
+  const fileNames = files.map((f) => f.name);
+
+  const payload = {
+    taskId: task.id,
+    text,
+    files: fileNames,
+  };
+
+  try {
+    const res = await fetch("http://localhost:5000/tasks/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
     });
-  
-    setExpandedIndex(null);
-  };  
 
+    if (!res.ok) throw new Error("Failed to submit task");
+
+    const data = await res.json();
+    alert(data.message);
+    fetchMyTasks(); // Refresh tasks after submission
+  } catch (err: any) {
+    alert(err.message);
+  }
+};
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F0EBE9] to-white p-4 md:p-8">
       {/* Header */}
@@ -232,8 +266,8 @@ const handleMarkCompleted = (status: string, index: number) => {
                   className="w-20 h-20"
                   />
           <div>
-            <h1 className="text-lg md:text-xl lg:text-[24px] font-normal">Jacob Smith</h1>
-            <p className="text-sm text-[#838383]">Jacobsmith@gmail.com</p>
+            <h1 className="text-lg md:text-xl lg:text-[24px] font-normal">Staff Account</h1>
+            <p className="text-sm text-[#838383]">{UserEmail}</p>
           </div>
         </div>
 
@@ -370,24 +404,17 @@ const handleMarkCompleted = (status: string, index: number) => {
   </div>
 )} 
 
-{task.status !== "Tasks In Progress" && task.submission?.files && task.submission.files.length > 0 && (
-    <div className="mt-3">
-      <h3 className="font-medium mb-2">Submitted Files</h3>
-      <ul className="list-disc list-inside text-sm text-gray-700">
-        {task.submission.files.map((file: string, idx: number) => (
-          <li key={idx}>
-            {/* If you have a file URL, wrap in <a> */}
-            <a
-              href={`/uploads/${file}`} // adjust path as needed
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:underline"
-            >
-              {file}
-            </a>
-          </li>
-        ))}
-      </ul>
+{task.status !== "Tasks In Progress" && task.submissionFiles && (
+    <div className="mt-2">
+    <h3 className="font-semibold">Submitted File</h3>
+    <a
+      href={task.submissionFiles}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-blue-500 hover:underline"
+    >
+      {task.submissionFiles.split("/").pop()} {/* shows filename */}
+    </a>
       <h3 className="font-medium mb-2 mt-3 text-[13px]">Submitted: {task.submittedDate}</h3>
     </div>
   )} 
@@ -396,9 +423,14 @@ const handleMarkCompleted = (status: string, index: number) => {
     <div>
             <div className="mt-4">
               <label className="flex items-center gap-2 border border-dashed border-gray-400 rounded-md p-2 text-sm text-gray-600 cursor-pointer hover:bg-gray-100 transition">
-                <Upload size={18} />
-                Upload Document
-                <input type="file" className="hidden" />
+              <Upload size={18} />
+    Upload Document
+    <input
+      type="file"
+      multiple
+      className="hidden"
+      onChange={(e) => handleFileChange(task.status, index, e.target.files)}
+    />
               </label>
             </div>
 
@@ -409,7 +441,7 @@ const handleMarkCompleted = (status: string, index: number) => {
               </button>
 
               <button
-    onClick={() => handleMarkCompleted(task.status, index)}
+    onClick={() => handleSubmitTask(task, index)}
     className="w-full md:w-1/2 bg-[#DE6328] text-white rounded-xl py-3 font-medium shadow-md hover:shadow-lg transition"
   >
     Mark as Completed

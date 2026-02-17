@@ -17,124 +17,82 @@ import { LayoutDashboard, UsersRound } from "lucide-react";
 import AssignTaskModal from "../popups/assignTask";
 import TaskPage  from "./AdminTasksPage";
 
-const data = [
-  { day: "Mon 20", thisWeek: 3, lastWeek: 1 },
-  { day: "Tue 21", thisWeek: 2, lastWeek: 4 },
-  { day: "Wed 22", thisWeek: 8, lastWeek: 3 },
-  { day: "Thu 23", thisWeek: 3, lastWeek: 1 },
-  { day: "Fri 24", thisWeek: 1, lastWeek: 4 },
-  { day: "Sat 25", thisWeek: 2, lastWeek: 6 },
-  { day: "Sun 26", thisWeek: 5, lastWeek: 7 },
-];
-
-export type TaskStatus = "ongoing" | "completed" | "rejected";
+// const data = [
+//   { day: "Mon 20", thisWeek: 3, lastWeek: 1 },
+//   { day: "Tue 21", thisWeek: 2, lastWeek: 4 },
+//   { day: "Wed 22", thisWeek: 8, lastWeek: 3 },
+//   { day: "Thu 23", thisWeek: 3, lastWeek: 1 },
+//   { day: "Fri 24", thisWeek: 1, lastWeek: 4 },
+//   { day: "Sat 25", thisWeek: 2, lastWeek: 6 },
+//   { day: "Sun 26", thisWeek: 5, lastWeek: 7 },
+// ];
 
 export interface Task {
-  id: number;
+  id: string;
   title: string;
   description: string;
   assignedTo: string;
+  staffName: string;
   assignedDate: string;
-  status: TaskStatus;
-  submittedReport?: string;
+  status: "IN_PROGRESS" | "COMPLETED" | "REJECTED" | null;
+  submissionText?: string;
+  submissionFiles?: string;
+  rejectionReason?: string;
+  reviewStatus?: "PENDING" | "APPROVED" | "REJECTED";
+  createdAt: string;
+  submissionId: string;
 }
 
-export const tasks: Task[] = [
-  // 🔵 ONGOING TASKS
-  {
-    id: 1,
-    title: "Prepare Q2 Event Budget",
-    description:
-      "Prepare a detailed financial breakdown for the Q2 corporate event including venue, logistics, marketing, and contingency costs.",
-    assignedTo: "Chinedu Okafor",
-    assignedDate: "05-03-2025",
-    status: "ongoing",
-  },
-  {
-    id: 2,
-    title: "Venue Inspection – Lekki",
-    description:
-      "Visit the Lekki event center to inspect facilities, confirm hall capacity, parking availability, and safety compliance.",
-    assignedTo: "Aisha Bello",
-    assignedDate: "06-03-2025",
-    status: "ongoing",
-  },
-  {
-    id: 3,
-    title: "Design Event Flyer",
-    description:
-      "Create a promotional flyer design for the Annual Business Summit including sponsor logos and speaker highlights.",
-    assignedTo: "Tolu Adeyemi",
-    assignedDate: "07-03-2025",
-    status: "ongoing",
-  },
-
-  // 🟢 COMPLETED TASKS
-  {
-    id: 5,
-    title: "Confirm Catering Services",
-    description:
-      "Finalize catering menu selection and confirm service timeline with approved vendor.",
-    assignedTo: "Ifeoma Nwosu",
-    assignedDate: "25-02-2025",
-    status: "completed",
-    submittedReport:
-      "Menu approved by management. Vendor confirmed availability. Deposit payment completed.",
-  },
-  {
-    id: 6,
-    title: "Secure Media Partnership",
-    description:
-      "Negotiate media partnership deal with Lagos Business Radio for event publicity coverage.",
-    assignedTo: "Emeka Obi",
-    assignedDate: "24-02-2025",
-    status: "completed",
-    submittedReport:
-      "Media partner confirmed. Promotional slots scheduled for two weeks before event.",
-  },
-
-  // 🔴 REJECTED TASKS
-  {
-    id: 7,
-    title: "Draft Sponsorship Proposal",
-    description:
-      "Prepare sponsorship proposal document outlining partnership tiers and associated benefits.",
-    assignedTo: "Fatima Yusuf",
-    assignedDate: "01-03-2025",
-    status: "rejected",
-    submittedReport:
-      "Proposal drafted but requires additional financial projections and sponsor visibility metrics.",
-  },
-  {
-    id: 8,
-    title: "Book Guest Speaker Flights",
-    description:
-      "Arrange travel bookings for keynote speakers arriving from Abuja and Port Harcourt.",
-    assignedTo: "Samuel Adekunle",
-    assignedDate: "02-03-2025",
-    status: "rejected",
-    submittedReport:
-      "Flight options provided but pricing exceeded allocated travel budget.",
-  },
-  {
-    id: 9,
-    title: "Set Up Event Registration Page",
-    description:
-      "Develop and deploy an online registration page with payment integration and confirmation emails.",
-    assignedTo: "Blessing Eze",
-    assignedDate: "03-03-2025",
-    status: "rejected",
-    submittedReport:
-      "Page deployed successfully but payment gateway integration failed during testing.",
-  },
-];
+export type TaskStatus = "IN_PROGRESS" | "COMPLETED" | "REJECTED" | null;
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const location = useLocation();
+  const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+
+  // Helper to get week number (0 = Sunday, 1 = Monday,...)
+  const getWeekNumber = (date: Date) => {
+    const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+    const pastDaysOfYear =
+      (date.getTime() - firstDayOfYear.getTime()) / 86400000;
+    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+  };
+  
+  // Get current week and last week numbers
+  const now = new Date();
+  const thisWeekNum = getWeekNumber(now);
+  const lastWeekNum = thisWeekNum - 1;
+  
+  // Initialize data
+  const data = [
+    { day: "Mon", thisWeek: 0, lastWeek: 0 },
+    { day: "Tue", thisWeek: 0, lastWeek: 0 },
+    { day: "Wed", thisWeek: 0, lastWeek: 0 },
+    { day: "Thu", thisWeek: 0, lastWeek: 0 },
+    { day: "Fri", thisWeek: 0, lastWeek: 0 },
+    { day: "Sat", thisWeek: 0, lastWeek: 0 },
+    { day: "Sun", thisWeek: 0, lastWeek: 0 },
+  ];
+  
+  // Count tasks per day
+  tasks.forEach((task: Task) => {
+    const date = new Date(task.createdAt);
+    const dayIndex = date.getDay(); // 0 = Sunday, 1 = Monday ...
+    const weekNum = getWeekNumber(date);
+  
+    if (weekNum === thisWeekNum) {
+      data[dayIndex === 0 ? 6 : dayIndex - 1].thisWeek += 1; // shift Sun to end
+      data[dayIndex === 0 ? 6 : dayIndex - 1].day = `${["Mon","Tue","Wed","Thu","Fri","Sat","Sun"][dayIndex === 0 ? 6 : dayIndex - 1]} ${date.getDate()}`;
+    } else if (weekNum === lastWeekNum) {
+      data[dayIndex === 0 ? 6 : dayIndex - 1].lastWeek += 1;
+    }
+  });
+  
+  console.log(data);
+  
   const isActive = (path: string) => location.pathname === path;
   const [activeStatus, setActiveStatus] = useState<
-  "ongoing" | "completed" | "rejected" | null
+ "IN_PROGRESS" | "COMPLETED" | "REJECTED" | null
 >(null);
 
   const baseClasses =
@@ -244,8 +202,8 @@ export default function AdminDashboard() {
         <StatCard
           icon={<Plus size={18} />}
           title="Ongoing Tasks"
-          value="03"
-          status="ongoing"
+          value={localStorage.getItem("ongoingCount") || "0"}
+          status="IN_PROGRESS"
           onSelect={setActiveStatus}
           button="+ Add New"
         />
@@ -254,18 +212,18 @@ export default function AdminDashboard() {
         <StatCard
           icon={<CheckCircle size={18} />}
           title="Completed Tasks"
-          status="completed"
+          status="COMPLETED"
           onSelect={setActiveStatus}
-          value="02"
+          value={localStorage.getItem("completedCount") || "0"}
         />
 
         {/* Rejected */}
         <StatCard
           icon={<XCircle size={18} />}
           title="Rejected Tasks"
-          status="rejected"
+          status="REJECTED"
           onSelect={setActiveStatus}
-          value="03"
+          value={localStorage.getItem("rejectedCount") || "0"}
         />
 
         {/* Staff */}
@@ -274,7 +232,7 @@ export default function AdminDashboard() {
           status=""
           title="Total Number of Staffs"
           onSelect={() => {}}
-          value="06"
+          value={localStorage.getItem("staffCount") || "0"}
         />
       </div>
       <TaskPage status={activeStatus}/>
@@ -294,8 +252,8 @@ function StatCard({
   icon: React.ReactNode;
   title: string;
   value: string;
-  status: "ongoing" | "completed" | "rejected" | "";
-  onSelect: (status: "ongoing" | "completed" | "rejected") => void;
+  status: "IN_PROGRESS" | "COMPLETED" | "REJECTED" | "";
+  onSelect: (status: "IN_PROGRESS" | "COMPLETED" | "REJECTED" | null) => void;
   button?: string;
 }) {
   const [open, setOpen] = useState(false);
