@@ -1,6 +1,7 @@
 import { X } from "lucide-react";
 import type { Task } from "../Staff/staffAdmin";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 interface Props {
   task: Task | null;
@@ -27,12 +28,13 @@ export default function TaskDetailsModal({ task, onClose, fetchAllTasks }: Props
       if (!res.ok) throw new Error("Failed to accept task");
   
       const data = await res.json();
-      alert(data.message); // "Task accepted"
+      toast.success(data.message); // "Task accepted"
+      onClose();
       
       // Optionally refresh the tasks list
       fetchAllTasks();
     } catch (err: any) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
 
@@ -41,7 +43,7 @@ export default function TaskDetailsModal({ task, onClose, fetchAllTasks }: Props
   const handleReject = async (taskId: string, submissionId: string) => {
     setRejectTask(true);
   if (!reason) {
-      alert("Please provide a reason for rejection");
+    toast("Please provide a reason for rejection");
       return;
     }
 
@@ -60,13 +62,14 @@ export default function TaskDetailsModal({ task, onClose, fetchAllTasks }: Props
       if (!res.ok) throw new Error("Failed to reject task");
   
       const data = await res.json();
-      alert(data.message); // "Task rejected"
+      toast.success(data.message); // "Task rejected"
+      onClose();
   
       // Optionally refresh the tasks list
       setRejectTask(false);
       fetchAllTasks();
     } catch (err: any) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
   
@@ -127,10 +130,9 @@ export default function TaskDetailsModal({ task, onClose, fetchAllTasks }: Props
         {task.status === "REJECTED" || rejectTask && (
         <textarea
                 placeholder="Rejection reason..."
-                readOnly
                 value={task.rejectionReason || ""}
                 onChange={(e) => setReason(e.target.value)}
-                className="w-full rounded-xl bg-white/70 border border-red-400 p-4 text-sm focus:outline-none resize-none h-24"
+                className="w-full rounded-xl bg-white/70 border border-red-400 p-4 text-sm focus:outline-none resize-none h-24 mt-3"
               />
         )}
 

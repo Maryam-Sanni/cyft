@@ -10,6 +10,7 @@ import Staff from "../../assets/Logo2.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import { LayoutDashboard, UsersRound } from "lucide-react";
 import AddStaff from "../popups/AddStaff";
+import { toast } from "react-toastify";
 
 interface Staff {
   id: string;
@@ -77,10 +78,10 @@ export default function StaffPage() {
   
       if (!res.ok) throw new Error("Failed to delete staff");
   
-      alert("Staff deleted successfully!");
+      toast.success("Staff deleted successfully!");
       setStaffData(prev => prev.filter(staff => staff.id !== staffId));
     } catch (err: any) {
-      alert(err.message);
+      toast.error(err.message);
     }
   };
   

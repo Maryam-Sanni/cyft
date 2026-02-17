@@ -1,5 +1,6 @@
-import { X, Upload, ChevronDown } from "lucide-react";
+import { X, ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 interface AssignTaskModalProps {
   isOpen: boolean;
@@ -48,9 +49,10 @@ const handleCreateTask = async () => {
       },
       body: JSON.stringify({ title, description, assignedTo: selectedStaff, deadline }),
     });
-    alert("Task created!");
+    toast.success("Task created!");
+    onClose();
   } catch (err) {
-    alert("Error creating task");
+    toast.error("Error creating task");
   }
 };
 
@@ -74,7 +76,7 @@ const handleCreateTask = async () => {
         </div>
 
         {/* Form */}
-        <div className="space-y-5">
+        <div className="space-y-5 mt-10 mb-10">
 
           {/* Task Title */}
           <input
@@ -93,13 +95,6 @@ const handleCreateTask = async () => {
             onChange={(e) => setDescription(e.target.value)}
             className="w-full border border-gray-200 rounded-xl px-4 py-3 resize-none focus:outline-none focus:ring-2 focus:ring-orange-400"
           />
-
-          {/* File Upload */}
-          <label className="flex items-center gap-3 border border-dashed border-gray-300 rounded-xl px-4 py-3 cursor-pointer hover:bg-gray-50 transition">
-            <Upload size={16} />
-            <span className="text-sm text-gray-600">Add File</span>
-            <input type="file" className="hidden" />
-          </label>
 
           {/* Assign Staff */}
           <div className="relative">

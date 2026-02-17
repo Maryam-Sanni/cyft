@@ -5,7 +5,8 @@ import { Upload } from "lucide-react";
 import Task from "../../assets/Task.png";
 import Staff from "../../assets/Staff.png";
 import { useNavigate } from "react-router-dom";
-  
+import { toast } from "react-toastify";
+
 export interface Task {
   id: string;
   title: string;
@@ -20,6 +21,7 @@ export interface Task {
   reviewStatus?: "PENDING" | "APPROVED" | "REJECTED";
   createdAt: string;
   submissionId: string;
+  deadline: string;
 }
 
 export default function StaffDashboard() {
@@ -248,10 +250,10 @@ const handleSubmitTask = async (task: any, index: number) => {
     if (!res.ok) throw new Error("Failed to submit task");
 
     const data = await res.json();
-    alert(data.message);
+    toast.success(data.message);
     fetchMyTasks(); // Refresh tasks after submission
   } catch (err: any) {
-    alert(err.message);
+    toast.error(err.message);
   }
 };
   
