@@ -30,7 +30,7 @@ export default function NotificationsPage() {
   
     // Fetch announcements
     const fetchAnnouncements = async () => {
-      const res = await fetch(API_URL, { headers: headers() });
+      const res = await fetch(`${API_URL}/announcements`, { headers: headers() });
       if (!res.ok) throw new Error("Failed to fetch announcements");
       return res.json();
     };
@@ -48,7 +48,7 @@ export default function NotificationsPage() {
   
     // Mark as seen
     const markSeen = async (id: number) => {
-      const res = await fetch(`${API_URL}/${id}/seen`, {
+      const res = await fetch(`${API_URL}/announcements/${id}/seen`, {
         method: "POST",
         headers: headers(),
       });
