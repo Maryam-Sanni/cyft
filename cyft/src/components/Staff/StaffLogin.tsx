@@ -20,7 +20,7 @@ const Login = () => {
     setLoading(true);
   
     try {
-      const res = await fetch("http://localhost:5000/auth/login", {
+      const res = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -36,6 +36,7 @@ const Login = () => {
       // Save token for future requests
       localStorage.setItem("token", data.token);
       localStorage.setItem("UserEmail", data?.user?.email || "");
+      localStorage.setItem("id", data?.user?.id || "");
   
       // Redirect based on role
       if (data.user.role === "ADMIN") {

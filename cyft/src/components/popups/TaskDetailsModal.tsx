@@ -9,6 +9,8 @@ interface Props {
   fetchAllTasks: () => void;
 }
 
+const API_URL = import.meta.env.VITE_API_URL
+
 export default function TaskDetailsModal({ task, onClose, fetchAllTasks }: Props) {
   if (!task) return null;
 
@@ -16,7 +18,7 @@ export default function TaskDetailsModal({ task, onClose, fetchAllTasks }: Props
     const token = localStorage.getItem("token"); // Admin JWT
   
     try {
-      const res = await fetch("http://localhost:5000/tasks/accept", {
+      const res = await fetch(`${API_URL}/tasks/accept`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -50,7 +52,7 @@ export default function TaskDetailsModal({ task, onClose, fetchAllTasks }: Props
     const token = localStorage.getItem("token"); // Admin JWT
   
     try {
-      const res = await fetch("http://localhost:5000/tasks/reject", {
+      const res = await fetch(`${API_URL}/tasks/reject`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

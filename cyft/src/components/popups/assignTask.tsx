@@ -13,6 +13,8 @@ interface Staff {
   department: string;
 }
 
+const API_URL = import.meta.env.VITE_API_URL
+
 export default function AssignTaskModal({
   isOpen,
   onClose,
@@ -27,7 +29,7 @@ export default function AssignTaskModal({
 useEffect(() => {
   const fetchStaff = async () => {
     const token = localStorage.getItem("token");
-    const res = await fetch("http://localhost:5000/staff", {
+    const res = await fetch(`${API_URL}/staff`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data: Staff[] = await res.json();
@@ -41,7 +43,7 @@ useEffect(() => {
 const handleCreateTask = async () => {
   try {
     const token = localStorage.getItem("token");
-    await fetch("http://localhost:5000/tasks", {
+    await fetch(`${API_URL}/tasks`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -7,6 +7,8 @@ import Staff from "../../assets/Staff.png";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
+const API_URL = import.meta.env.VITE_API_URL
+
 export interface Task {
   id: string;
   title: string;
@@ -81,7 +83,7 @@ export default function StaffDashboard() {
       const fetchMyTasks = async () => {
         const token = localStorage.getItem("token");
       
-        const res = await fetch("http://localhost:5000/tasks/my-tasks", {
+        const res = await fetch(`${API_URL}/tasks/my-tasks`, {
           headers: { Authorization: `Bearer ${token}` },
         });
       
@@ -238,7 +240,7 @@ const handleSubmitTask = async (task: any, index: number) => {
   };
 
   try {
-    const res = await fetch("http://localhost:5000/tasks/submit", {
+    const res = await fetch(`${API_URL}/tasks/submit`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -5,12 +5,16 @@ import {
   Plus,
   Trash2,
   LogOut,
+  Eye,
+  EyeOff
 } from "lucide-react";
 import Staff from "../../assets/Logo2.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import { LayoutDashboard, UsersRound } from "lucide-react";
 import AddStaff from "../popups/AddStaff";
 import { toast } from "react-toastify";
+
+const API_URL = import.meta.env.VITE_API_URL
 
 interface Staff {
   id: string;
@@ -19,6 +23,7 @@ interface Staff {
   department: string;
   isActive: boolean;
   dateCreated: string;
+  tempPassword: string;
 }
 
 const tabs = [
@@ -36,13 +41,12 @@ export default function StaffPage() {
   const [open, setOpen] = useState(false);
   const isActive = (path: string) => location.pathname === path;
   const [staffData, setStaffData] = useState<Staff[]>([]);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+
     const fetchStaff = async () => {
       const token = localStorage.getItem("token"); // Admin JWT
       try {
-        const res = await fetch("http://localhost:5000/staff", {
+        const res = await fetch(`${API_URL}/staff`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -53,11 +57,10 @@ export default function StaffPage() {
         const data: Staff[] = await res.json();
         setStaffData(data);
       } catch (err: any) {
-      } finally {
-        setLoading(false);
-      }
+      } 
     };
 
+    useEffect(() => {
     fetchStaff();
   }, []);
 
@@ -67,7 +70,7 @@ export default function StaffPage() {
   
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:5000/staff/${staffId}`, {
+      const res = await fetch(`${API_URL}/staff/${staffId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -84,9 +87,6 @@ export default function StaffPage() {
       toast.error(err.message);
     }
   };
-  
-  
-  if (loading) return <p>Loading staff...</p>;
 
   const baseClasses =
     "text-md flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-200";
@@ -132,6 +132,8 @@ function getAvatarColor(name: string | null) {
   return colors[index];
 }
   
+const [showTemp, setShowTemp] = useState(false);
+
   return (
     <div className="min-h-screen bg-[#f3efed] p-4 md:p-8">
       {/* Header */}
@@ -238,6 +240,7 @@ function getAvatarColor(name: string | null) {
                 <th className="pb-3">Names</th>
                 <th className="pb-3">Department</th>
                 <th className="pb-3">Creation Date</th>
+                <th className="pb-3">Temporary Password</th>
                 <th></th>
               </tr>
             </thead>
@@ -269,12 +272,26 @@ function getAvatarColor(name: string | null) {
                   <td className="text-[16px]">{staff.department}</td>
                   <td className="text-[16px]">{staff.dateCreated}</td>
 
+{/* Temp Password Column */}
+<td className="text-[16px] flex items-center justify-center gap-2">
+          {showTemp ? staff.tempPassword : "••••••••"}
+          <button
+            onClick={() => setShowTemp(!showTemp)}
+            className="p-1 rounded hover:bg-gray-200 transition"
+          >
+            {showTemp ? (
+              <EyeOff size={16} className="text-gray-600" />
+            ) : (
+              <Eye size={16} className="text-gray-600" />
+            )}
+          </button>
+        </td>
                   <td className="text-right">
                     <button onClick={() => handleDelete(staff.id, staff.email)}
-                    className="p-2 rounded-lg hover:shadow hover:bg-red-50 transition">
+                    className="p-2 rounded-lg transition">
                       <Trash2
                         size={16}
-                        className="text-gray-600"
+                        className="text-gray-600 hover:text-red-500"
                       />
                     </button>
                   </td>
@@ -301,6 +318,7 @@ function getAvatarColor(name: string | null) {
       <AddStaff
         isOpen={open}
         onClose={() => setOpen(false)}
+        onStaffCreated={fetchStaff}
       />
     </div>
   );

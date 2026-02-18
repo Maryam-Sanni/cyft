@@ -1,6 +1,10 @@
 import type { Task } from "../Staff/staffAdmin";
 import { useState, useEffect } from "react";
 import TaskDetailsModal from "../popups/TaskDetailsModal";
+import { Trash2 } from "lucide-react";
+import TaskImg from "../../assets/Task.png";
+
+const API_URL = import.meta.env.VITE_API_URL
 
 export default function AdminTasksPage({
     status,
@@ -13,7 +17,7 @@ export default function AdminTasksPage({
     const fetchAllTasks = async () => {
       const token = localStorage.getItem("token");
     
-      const res = await fetch("http://localhost:5000/tasks/all", {
+      const res = await fetch(`${API_URL}/tasks/all`, {
         headers: { Authorization: `Bearer ${token}` }
       });
     
@@ -49,6 +53,33 @@ localStorage.setItem("rejectedCount", rejected.length.toString());
         ? "Completed Tasks"
         : "Rejected Tasks";
   
+        const handleDeleteTask = async (taskId: string) => {
+          const confirmDelete = window.confirm(
+            "Are you sure you want to delete this task?"
+          );
+        
+          if (!confirmDelete) return;
+        
+          const token = localStorage.getItem("token");
+        
+          const res = await fetch(`${API_URL}/tasks/${taskId}`, {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        
+          if (!res.ok) {
+            alert("Failed to delete task");
+            return;
+          }
+        
+          alert("Task deleted");
+        
+          // Remove from UI
+          setTasks((prev) => prev.filter((task) => task.id !== taskId));
+        };
+        
     return (
       <div className="bg-[#f3efed]">
         <h1 className="text-2xl font-medium mt-15 mb-4">{pageTitle}</h1>
@@ -61,7 +92,8 @@ localStorage.setItem("rejectedCount", rejected.length.toString());
                 <th className="p-4">Description</th>
                 <th className="p-4">Assigned To</th>
                 <th className="p-4">Assigned Date</th>
-                <th className="p-4 text-center">Action</th>
+                <th className="p-4 text-center"></th>
+                <th className="p-4 text-center"></th>
               </tr>
             </thead>
   
@@ -85,10 +117,30 @@ localStorage.setItem("rejectedCount", rejected.length.toString());
                       Open
                     </button>
                   </td>
+                  <td className="p-4 text-center">
+                    <button 
+                      onClick={() => handleDeleteTask(task.id)}
+                    className="p-2 rounded-lg transition">
+                      <Trash2
+                        size={16}
+                        className="text-gray-600 hover:text-red-500"
+                      />
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          {filteredTasks.length === 0 && (
+    <div className="flex flex-col items-center gap-4 justify-center py-10 self-center">
+        <img
+            src={TaskImg}
+            alt="No tasks"
+            className="w-12 h-12 opacity-50"
+        />
+        <p className="text-gray-500 text-sm">No tasks available</p>
+        </div>
+)}
         </div>
   
         <TaskDetailsModal

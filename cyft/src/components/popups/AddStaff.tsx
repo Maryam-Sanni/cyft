@@ -7,6 +7,8 @@ interface AssignTaskModalProps {
   onStaffCreated?: () => void; // callback to refresh staff list
 }
 
+const API_URL = import.meta.env.VITE_API_URL
+
 export default function AssignTaskModal({
   isOpen,
   onClose,
@@ -36,7 +38,7 @@ export default function AssignTaskModal({
 
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5000/staff", {
+      const res = await fetch(`${API_URL}/staff`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,13 +58,14 @@ export default function AssignTaskModal({
 
       // Optional: Refresh staff list in parent
       if (onStaffCreated) onStaffCreated();
+      onClose();
     } catch (err: any) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
   };
-
+  
   if (!isOpen) return null;
 
   return (

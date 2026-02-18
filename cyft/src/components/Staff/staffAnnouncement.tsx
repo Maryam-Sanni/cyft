@@ -1,127 +1,120 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, X } from "lucide-react";
+import { useEffect } from "react";
+import logo from "../../assets/Logo2.png"
 
 type Notification = {
   id: number;
   title: string;
   message: string;
-  createdBy: "admin" | "staff";
+  createdBy: "ADMIN" | "STAFF";
+  CreatorId: string;
   creatorName?: string;
   createdAt: string;
-  deliveredTo: string[];
   seenBy: { name: string; time: string }[];
 };
 
 export default function NotificationsPage() {
-  const [active, setActive] = useState<Notification | null>(null);
   const [openCreate, setOpenCreate] = useState(false);
-  const [notifications, setNotifications] = useState<Notification[]>([
-    {
-      id: 1,
-      title: "Training Schedule Updated",
-      message:
-        "The fire safety training has been rescheduled to Friday at 10 AM in the main conference hall.",
-      createdBy: "admin",
-      createdAt: "Today, 9:30 AM",
-      deliveredTo: ["All Staff"],
-      seenBy: [
-        { name: "John Smith", time: "Today 9:45 AM" },
-        { name: "Mary Ann", time: "Today 9:50 AM" },
-      ],
-    },
-    {
-      id: 2,
-      title: "Event Setup Completed",
-      message:
-        "Stage and lighting setup for the annual summit is complete. Please verify all equipment is in working order.",
-      createdBy: "staff",
-      creatorName: "Tunde Bello",
-      createdAt: "Yesterday, 4:10 PM",
-      deliveredTo: ["All Staff", "Admin"],
-      seenBy: [{ name: "Admin", time: "Yesterday 4:30 PM" }],
-    },
-    {
-        id: 3,
-        title: "Facility Maintenance Alert",
-        message: "The air conditioning on the 3rd floor will be down for maintenance from 2 PM to 5 PM today. Plan accordingly.",
-        createdBy: "admin",
-        createdAt: "Today, 8:00 AM",
-        deliveredTo: ["All Staff"],
-        seenBy: [
-          { name: "Tunde Bello", time: "02-12-2026 8:15 AM" },
-          { name: "Seun Ogun", time: "02-12-2026 8:20 AM" },
-        ],
-      },
-    //   {
-    //     id: 4,
-    //     title: "New Event Booking",
-    //     message: "A new corporate client has booked the main hall for a workshop next Monday. Event team, please prepare the space.",
-    //     createdBy: "staff",
-    //     creatorName: "Mary Ann",
-    //     createdAt: "02-10-2026, 2:30 PM",
-    //     deliveredTo: ["All Staff", "Admin"],
-    //     seenBy: [
-    //       { name: "John Smith", time: "02-10-2026 2:45 PM" },
-    //       { name: "Admin", time: "02-10-2026 3:00 PM" },
-    //     ],
-    //   },
-    //   {
-    //     id: 5,
-    //     title: "Monthly Safety Drill",
-    //     message: "Reminder: Monthly safety drill will be conducted this Thursday at 11 AM. Attendance is mandatory.",
-    //     createdBy: "admin",
-    //     createdAt: "02-07-2026, 7:00 AM",
-    //     deliveredTo: ["All Staff"],
-    //     seenBy: [
-    //       { name: "Mary Ann", time: "02-07-2026 7:15 AM" },
-    //       { name: "Tunde Bello", time: "02-07-2026 7:20 AM" },
-    //     ],
-    //   },
-    //   {
-    //     id: 6,
-    //     title: "Training Material Uploaded",
-    //     message: "New training materials for the Customer Service workshop have been uploaded to the internal portal.",
-    //     createdBy: "staff",
-    //     creatorName: "Seun Ogun",
-    //     createdAt: "01-29-2026, 10:00 AM",
-    //     deliveredTo: ["All Staff", "Admin"],
-    //     seenBy: [
-    //       { name: "Admin", time: "01-29-2026 10:15 AM" },
-    //       { name: "Mary Ann", time: "01-29-2026 10:20 AM" },
-    //       { name: "Tunde Bello", time: "01-30-2026 4:20 AM" },
-    //       { name: "John Smith", time: "02-01-2026 4:45 PM" },
-    //     ],
-    //   },
-    ]);
-
+  const [notifications, setNotifications] = useState<Notification[]>([]);
     const [title, setTitle] = useState("");
     const [message, setMessage] = useState("");
-    const [role, setRole] = useState<"admin" | "staff">("admin");
 
-    const handleSend = () => {
-        if (!title || !message) return;
-    
-        const newNotification: Notification = {
-          id: Date.now(), // simple unique id
-          title,
-          message,
-          createdBy: role,
-          creatorName: role === "staff" ? "You" : undefined,
-          createdAt: "Just now",
-          deliveredTo: ["All Staff", "Admin"], // customize if needed
-          seenBy: [],
-        };
-    
-        // Add to top of array
-        setNotifications((prev) => [newNotification, ...prev]);
-        setOpenCreate(false);
-    
-        // Reset form
-        setTitle("");
-        setMessage("");
+    const API_URL = import.meta.env.VITE_API_URL
+
+    const headers = () => ({
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    });
+  
+    // Fetch announcements
+    const fetchAnnouncements = async () => {
+      const res = await fetch(API_URL, { headers: headers() });
+      if (!res.ok) throw new Error("Failed to fetch announcements");
+      return res.json();
+    };
+  
+    // Create announcement
+    const createAnnouncement = async (title?: string, description?: string) => {
+      const res = await fetch(`${API_URL}/announcements`, {
+        method: "POST",
+        headers: headers(),
+        body: JSON.stringify({ title, description }),
+      });
+      if (!res.ok) throw new Error("Failed to create announcement");
+      return res.json();
+    };
+  
+    // Mark as seen
+    const markSeen = async (id: number) => {
+      const res = await fetch(`${API_URL}/${id}/seen`, {
+        method: "POST",
+        headers: headers(),
+      });
+      if (!res.ok) throw new Error("Failed to mark announcement as seen");
+    };
+  
+    // Load & format announcements
+    const loadAnnouncements = async () => {
+      try {
+        const data = await fetchAnnouncements();
+        const formatted = data.map((a: any) => ({
+          id: a.id,
+          title: a.title ?? "No title",
+          message: a.description ?? "",
+          CreatorId: a.createdBy,
+          createdBy: a.createdByRole,
+          creatorName: a.creatorName,
+          createdAt: new Date(a.createdAt).toLocaleString(),
+          seenBy: a.seenBy.map((s: any) => ({
+            name: s.name,
+            time: new Date(s.seenAt).toLocaleString(),
+          })),
+        }));
+        setNotifications(formatted);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+  
+    useEffect(() => {
+      loadAnnouncements();
+    }, []);
+  
+    // Open an announcement
+    const openAnnouncement = async (n: Notification) => {
+      setOpenId(n.id);
+      await markSeen(n.id);
+      loadAnnouncements();
+    };
+  
+    // Send a new announcement
+    const handleSend = async () => {
+      if (!title && !message) return;
+      await createAnnouncement(title, message);
+      setOpenCreate(false);
+      setTitle("");
+      setMessage("");
+      loadAnnouncements();
+    };
+     
+const [openId, setOpenId] = useState<number | null>(null);
+
+      const handleDelete = async (id: number) => {
+        if (!confirm("Delete this announcement?")) return;
+      
+        await fetch(`${API_URL}/announcements/${id}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+      
+        setNotifications((prev) => prev.filter((n) => n.id !== id));
+        setOpenId(null);
       };
-
+      
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F0EBE9] to-white p-6">
       {/* Header */}
@@ -141,100 +134,118 @@ export default function NotificationsPage() {
 </button>
       </div>
 
+{notifications.length === 0 && (
+  <div className="text-center text-gray-500 mt-20">
+    No announcements yet
+    </div>
+   ) }
+
       {/* Notification List */}
-      <div className="space-y-3">
-        {notifications.map((n) => (
-          <button
-            key={n.id}
-            onClick={() => setActive(n)}
-            className={`w-full text-left bg-white shadow-sm p-2 rounded-lg border border-[#F9F6F6] transition hover:shadow-sm
-              ${
-                n.createdBy === "admin"
-                  ? "border-[#DE6328]/30"
-                  : "border-gray-200"
-              }`}
-          >
-            <div className="flex justify-between items-start">
-              <div>
-                <h3 className="font-semibold text-gray-900">{n.title}</h3>
-                <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-                  {n.message}
-                </p>
-              </div>
+      <div className="space-y-2">
+      {notifications.map((n) => {
+  // Toggle open state
+  const isOpen = openId === n.id;
+  const currentUserId = localStorage.getItem("id");
 
-              <span
-                className={`text-xs font-medium px-2 py-1 rounded-full
-                  ${
-                    n.createdBy === "admin"
-                      ? "bg-[#DE6328]/10 text-[#DE6328]"
-                      : "bg-gray-50 text-gray-600"
-                  }`}
-              >
-                {n.createdBy === "admin"
-                  ? "Admin"
-                  : n.creatorName ?? "Staff"}
-              </span>
-            </div>
+  const canDelete = currentUserId === n.CreatorId;
 
-            <p className="text-xs text-gray-400 mt-2">{n.createdAt}</p>
-          </button>
-        ))}
-      </div>
+  const handleToggle = async () => {
+    if (!isOpen) {
+      // Only mark seen when opening
+      await openAnnouncement(n);
+    } else {
+      setOpenId(null); // close
+    }
+  };
 
-      {/* Details Drawer */}
+  return (
+    <div
+      key={n.id}
+      className="bg-white rounded-xl border border-gray-200 overflow-hidden"
+    >
+      {/* Header */}
+      <button
+        onClick={handleToggle}
+        className="w-full flex items-start gap-3 p-4 text-left hover:bg-gray-50"
+      >
+        {n.createdBy === "ADMIN" ? (
+        <img
+          src={logo}
+          alt="Avatar"
+          className="w-10 h-10 rounded-full object-cover"
+        />
+      ) : (
+        <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-sm font-medium text-gray-600">
+          {n.creatorName ? n.creatorName[0] : "S"}
+        </div>
+      )}
+
+        <div className="flex-1">
+
+          <p className="text-sm text-gray-600 line-clamp-2 mt-1">{n.title}</p>
+          <p className="text-md text-gray-800">{n.message}</p>
+
+          <p className="text-sm text-gray-400 mt-2">{n.createdAt}</p>
+        </div>
+      </button>
+
+      {/* Expanded Content */}
       <AnimatePresence>
-        {active && (
+        {isOpen && (
           <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            className="fixed top-0 right-0 h-full w-full sm:w-[420px] bg-white shadow-xl p-6 z-50"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="px-4 pb-4"
           >
-            <button
-              onClick={() => setActive(null)}
-              className="text-sm text-gray-500 hover:text-[#DE6328]"
-            >
-              Close
-            </button>
+            {/* Seen By */}
+            <div className="mt-4">
+            <p className="text-sm font-medium text-gray-500 mb-2">Created by</p>
+            <p className="text-sm font-medium text-gray-900">
+            {n.createdBy === "ADMIN" ? "Admin" : n.creatorName}
+          </p>
+          </div>
+            <div className="mt-4">
+              <p className="text-sm font-medium text-gray-500 mb-2">Seen by</p>
 
-            <h2 className="mt-4 text-xl font-semibold">{active.title}</h2>
-            <p className="mt-2 text-gray-600">{active.message}</p>
-
-            <div className="mt-6 space-y-4 text-sm">
-              <div>
-                <p className="font-medium text-gray-700">Created By</p>
-                <p className="text-gray-600">
-                  {active.createdBy === "admin"
-                    ? "Admin"
-                    : active.creatorName}
-                </p>
-              </div>
-
-              <div>
-                <p className="font-medium text-gray-700">Delivered To</p>
-                <p className="text-gray-600">
-                  {active.deliveredTo.join(", ")}
-                </p>
-              </div>
-
-              <div>
-                <p className="font-medium text-gray-700">Seen By</p>
-                <ul className="mt-2 space-y-1">
-                  {active.seenBy.map((s, i) => (
+              {n.seenBy.length === 0 ? (
+                <p className="text-xs text-gray-400">No views yet</p>
+              ) : (
+                <ul className="space-y-1">
+                  {n.seenBy.map((s, i) => (
                     <li
                       key={i}
-                      className="flex justify-between text-gray-600"
+                      className="flex justify-between text-sm text-gray-600"
                     >
-                      <span>{s.name}</span>
-                      <span className="text-xs text-gray-400">{s.time}</span>
+                      <span>{s.name || "Admin"}</span>
+                      <span className="text-gray-400">{s.time}</span>
                     </li>
                   ))}
                 </ul>
-              </div>
+              )}
             </div>
+
+            {/* Actions */}
+            {canDelete && (
+              <div className="mt-4 flex justify-end">
+                <button
+                  onClick={() => handleDelete(n.id)}
+                  className="text-xs text-red-600 hover:underline"
+                >
+                  Delete
+                </button>
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
+    </div>
+  );
+})}
+
+</div>
+
 
       {/* Create Notification Modal */}
       <AnimatePresence>
@@ -274,15 +285,7 @@ export default function NotificationsPage() {
           className="w-full p-3 rounded-md border mb-3"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-        />
-        <select
-          className="w-full p-3 rounded-md border mb-3"
-          value={role}
-          onChange={(e) => setRole(e.target.value as "admin" | "staff")}
-        >
-          <option value="admin">Admin</option>
-          <option value="staff">Staff</option>
-        </select>
+        />     
 <button
           onClick={handleSend}
           className="mt-6 w-full bg-[#E06222] hover:bg-orange-400 text-white font-medium py-3 rounded-full transition-all duration-200 shadow-md hover:shadow-lg"
