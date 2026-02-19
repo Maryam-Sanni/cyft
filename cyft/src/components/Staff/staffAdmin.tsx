@@ -41,6 +41,13 @@ export interface Task {
   reviewStatus?: "PENDING" | "APPROVED" | "REJECTED";
   createdAt: string;
   submissionId: string;
+  staffname: string;
+  createdat: string
+  submissionfiles: string;
+  submissionid: string;
+  submissiontext?: string;
+  rejectionreason?: string;
+  reviewstatus?: "PENDING" | "APPROVED" | "REJECTED";
 }
 
 export type TaskStatus = "IN_PROGRESS" | "COMPLETED" | "REJECTED" | null;
@@ -49,7 +56,7 @@ export default function AdminDashboard() {
   const navigate = useNavigate();
   const location = useLocation();
   const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
-
+  
   // Helper to get week number (0 = Sunday, 1 = Monday,...)
   const getWeekNumber = (date: Date) => {
     const firstDayOfYear = new Date(date.getFullYear(), 0, 1);

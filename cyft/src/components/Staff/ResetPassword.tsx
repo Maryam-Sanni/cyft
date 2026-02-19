@@ -88,7 +88,7 @@ const ResetPassword = () => {
         <p className="text-center text-sm text-gray-500 mt-6">
           Remembered your password?{" "}
           <span
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/staff")}
             className="text-orange-600 font-medium cursor-pointer hover:underline"
           >
             Login

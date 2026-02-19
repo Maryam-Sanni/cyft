@@ -97,7 +97,7 @@ export default function TaskDetailsModal({ task, onClose, fetchAllTasks }: Props
 
           <p className="text-gray-600">{task.description}</p>
 
-          {task.reviewStatus === "PENDING" && (
+          {task.reviewstatus === "PENDING" && (
             <div>
           <h2 className="font-semibold">
             Submitted Report
@@ -107,45 +107,48 @@ export default function TaskDetailsModal({ task, onClose, fetchAllTasks }: Props
           </div>
           )}
 
-{task.submissionFiles && (
-    <div className="mt-2">
+{task.submissionfiles && JSON.parse(task.submissionfiles).length > 0 && (
+  <div className="mt-2">
     <h3 className="font-semibold">Submitted File</h3>
-    <a
-      href={task.submissionFiles}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-blue-500 hover:underline"
-    >
-      {task.submissionFiles.split("/").pop()} {/* shows filename */}
-    </a>
-    </div>
-  )} 
+    {JSON.parse(task.submissionfiles).map((file: string, index: number) => (
+      <a
+        key={index}
+        href={file} // remove the { } around file
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-500 hover:underline block"
+      >
+        {file.split("/").pop()} {/* shows just the filename */}
+      </a>
+    ))}
+  </div>
+)}
 
 <p className="text-sm text-gray-500">
-            Assigned to: {task.staffName}
+            Assigned to: {task.staffname}
           </p>
           <p className="text-sm text-gray-500">
-            Assigned date: {task.createdAt}
+            Assigned date: {task.createdat}
           </p>
         </div>
 
         {task.status === "REJECTED" || rejectTask && (
-        <textarea
-                placeholder="Rejection reason..."
-                value={task.rejectionReason || ""}
-                onChange={(e) => setReason(e.target.value)}
-                className="w-full rounded-xl bg-white/70 border border-red-400 p-4 text-sm focus:outline-none resize-none h-24 mt-3"
-              />
+       <textarea
+       placeholder="Rejection reason..."
+       value={reason}              // use local state
+       onChange={(e) => setReason(e.target.value)}
+       className="w-full rounded-xl bg-white/70 border border-red-400 p-4 text-sm focus:outline-none resize-none h-24 mt-3"
+     />
         )}
 
         {/* Conditional Buttons */}
-        {task.reviewStatus === "PENDING" && (
+        {task.reviewstatus === "PENDING" && (
           <div className="flex gap-4 mt-8">
-            <button onClick={() => handleReject(task.id, task.submissionId)} className="flex-1 border border-orange-500 text-orange-500 rounded-full py-2 hover:bg-orange-50 transition">
+            <button onClick={() => handleReject(task.id, task.submissionid)} className="flex-1 border border-orange-500 text-orange-500 rounded-full py-2 hover:bg-orange-50 transition">
               RETURN TASK
             </button>
 
-            <button onClick={() => handleAccept(task.id, task.submissionId)} className="flex-1 bg-orange-500 text-white rounded-full py-2 hover:bg-orange-400 transition">
+            <button onClick={() => handleAccept(task.id, task.submissionid)} className="flex-1 bg-orange-500 text-white rounded-full py-2 hover:bg-orange-400 transition">
             MARK AS FINISHED
             </button>
           </div>

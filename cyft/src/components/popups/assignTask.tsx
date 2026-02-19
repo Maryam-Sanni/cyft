@@ -6,11 +6,35 @@ interface AssignTaskModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
+
 interface Staff {
   id: string;
   name: string;
   email: string;
   department: string;
+}
+
+export interface Task {
+  id: string;
+  title: string;
+  description: string;
+  assignedTo: string;
+  staffName: string;
+  assignedDate: string;
+  status: "IN_PROGRESS" | "COMPLETED" | "REJECTED" | null;
+  submissionText?: string;
+  submissionFiles?: string;
+  rejectionReason?: string;
+  reviewStatus?: "PENDING" | "APPROVED" | "REJECTED";
+  createdAt: string;
+  submissionId: string;
+  staffname: string;
+  createdat: string
+  submissionfiles: string;
+  submissionid: string;
+  submissiontext?: string;
+  rejectionreason?: string;
+  reviewstatus?: "PENDING" | "APPROVED" | "REJECTED";
 }
 
 const API_URL = import.meta.env.VITE_API_URL
@@ -24,7 +48,28 @@ export default function AssignTaskModal({
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
+  const [tasks, setTasks] = useState<Task[]>([]);
 
+  const fetchAllTasks = async () => {
+       const token = localStorage.getItem("token");
+     
+       const res = await fetch(`${API_URL}/tasks/all`, {
+         headers: { Authorization: `Bearer ${token}` }
+       });
+     
+       if (!res.ok) throw new Error("Failed to fetch tasks");
+     
+       const data = await res.json();
+       setTasks(data); // tasks = state in your component
+       localStorage.setItem("tasks", JSON.stringify(data)); 
+     };
+   
+ const ongoing = tasks.filter(t => t.status === "IN_PROGRESS");
+ localStorage.setItem("ongoingCount", ongoing.length.toString());
+ const completed = tasks.filter(t => t.status === "COMPLETED");
+ localStorage.setItem("completedCount", completed.length.toString());
+ const rejected = tasks.filter(t => t.status === "REJECTED");
+ localStorage.setItem("rejectedCount", rejected.length.toString());
   
 useEffect(() => {
   const fetchStaff = async () => {
@@ -53,6 +98,7 @@ const handleCreateTask = async () => {
     });
     toast.success("Task created!");
     onClose();
+    fetchAllTasks();
   } catch (err) {
     toast.error("Error creating task");
   }

@@ -12,6 +12,9 @@ type Notification = {
   CreatorId: string;
   creatorName?: string;
   createdAt: string;
+  createdbyrole: "ADMIN" | "STAFF";
+  creatorname?: string;
+  createdat: string;
   seenBy: { name: string; time: string }[];
 };
 
@@ -63,10 +66,10 @@ export default function NotificationsPage() {
           id: a.id,
           title: a.title ?? "No title",
           message: a.description ?? "",
-          CreatorId: a.createdBy,
-          createdBy: a.createdByRole,
-          creatorName: a.creatorName,
-          createdAt: new Date(a.createdAt).toLocaleString(),
+          CreatorId: a.createdby,
+          createdBy: a.createdbyrole,
+          creatorName: a.creatorname,
+          createdAt: new Date(a.createdat).toLocaleString(),
           seenBy: a.seenBy.map((s: any) => ({
             name: s.name,
             time: new Date(s.seenAt).toLocaleString(),

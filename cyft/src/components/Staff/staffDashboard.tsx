@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Upload } from "lucide-react";
 import Task from "../../assets/Task.png";
-import Staff from "../../assets/Staff.png";
+import Staff from "../../assets/Logo2.png";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -23,7 +23,13 @@ export interface Task {
   reviewStatus?: "PENDING" | "APPROVED" | "REJECTED";
   createdAt: string;
   submissionId: string;
-  deadline: string;
+  staffname: string;
+  createdat: string
+  submissionfiles: string;
+  submissionid: string;
+  submissiontext?: string;
+  rejectionreason?: string;
+  reviewstatus?: "PENDING" | "APPROVED" | "REJECTED";
 }
 
 export default function StaffDashboard() {
@@ -157,14 +163,14 @@ const derivedTaskData = useMemo((): Record<typeof STAT_ORDER[number], any[]> => 
             
 
       const useCountdown = (deadline: string) => {
-        const parseDDMMYYYY = (dateStr: string) => {
-          const [day, month, year] = dateStr.split("-").map(Number);
+        const parseYYYYMMDD = (dateStr: string) => {
+          const [year, month, day] = dateStr.split("-").map(Number);
           return new Date(year, month - 1, day, 23, 59, 59);
-        };
+        };        
       
         const getParts = () => {
           const now = Date.now();
-          const end = parseDDMMYYYY(deadline).getTime();
+          const end = parseYYYYMMDD(deadline).getTime();
           const diff = end - now;
       
           if (diff <= 0) return { days: "00", hours: "00", minutes: "00", seconds: "00" };
@@ -207,7 +213,7 @@ const derivedTaskData = useMemo((): Record<typeof STAT_ORDER[number], any[]> => 
     
 // State for task reports and files
 const [taskTexts, setTaskTexts] = useState<{ [key: string]: string }>({});
-const [taskFiles, setTaskFiles] = useState<{ [key: string]: File[] }>({});
+const [taskFiles, setTaskFiles] = useState<{ [key: string]: File }>({});
 
 // Handle text change
 const handleTextChange = (status: string, index: number, value: string) => {
@@ -216,59 +222,92 @@ const handleTextChange = (status: string, index: number, value: string) => {
 };
 
 // Handle file upload
-const handleFileChange = (status: string, index: number, files: FileList | null) => {
-  if (!files) return;
+const handleFileChange = (
+  status: string,
+  index: number,
+  fileList: FileList | null
+) => {
+  if (!fileList || fileList.length === 0) return;
+
   const key = `${status}-${index}`;
-  setTaskFiles((prev) => ({ ...prev, [key]: Array.from(files) }));
+  const file = fileList[0]; // only take the first file
+
+  setTaskFiles((prev: any) => ({
+    ...prev,
+    [key]: file, // store single File object
+  }));
 };
 
 const handleSubmitTask = async (task: any, index: number) => {
-  const token = localStorage.getItem("token");
-
   const key = `${task.status}-${index}`;
   const text = taskTexts[key] ?? "";
-  const files = taskFiles[key] ?? [];
-
-  // Convert files to just names or upload them to server first
-  // For simplicity, just send file names
-  const fileNames = files.map((f) => f.name);
-
-  const payload = {
-    taskId: task.id,
-    text,
-    files: fileNames,
-  };
+  const file = taskFiles[key]; // single file
+  let fileUrl: string | null = null;
 
   try {
-    const res = await fetch(`${API_URL}/tasks/submit`, {
+    if (file) {
+      toast.loading("Uploading file to Cloudinary...");
+
+      const cloudData = new FormData();
+      cloudData.append("file", file);
+      cloudData.append("upload_preset", "task_submissions"); // your Cloudinary preset
+
+      // Upload file to Cloudinary
+      const cloudRes = await fetch(
+        `https://api.cloudinary.com/v1_1/cyftconsulting/auto/upload`,
+        {
+          method: "POST",
+          body: cloudData,
+        }
+      );
+
+      if (!cloudRes.ok) throw new Error("Failed to upload file to Cloudinary");
+
+      const cloudResult = await cloudRes.json();
+      fileUrl = cloudResult.secure_url; // Cloudinary file URL
+    }
+
+    toast.loading("Submitting task...");
+
+    // Send task info + optional Cloudinary URL to backend
+    const token = localStorage.getItem("token");
+    const backendRes = await fetch(`${API_URL}/tasks/submit`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        taskId: task.id,
+        text,
+        fileUrl, // can be null
+      }),
     });
 
-    if (!res.ok) throw new Error("Failed to submit task");
+    if (!backendRes.ok) throw new Error("Failed to submit task to backend");
 
-    const data = await res.json();
-    toast.success(data.message);
-    fetchMyTasks(); // Refresh tasks after submission
+    toast.success("Task submitted successfully!");
+    setExpandedIndex(null);
+    fetchMyTasks(); // refresh task list
+    setTaskFiles((prev: any) => ({ ...prev, [key]: null })); // reset file
   } catch (err: any) {
     toast.error(err.message);
   }
 };
+
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F0EBE9] to-white p-4 md:p-8">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-        <img
-                  src={Staff}
-                  alt={"staff"}
-                  className="w-20 h-20"
-                  />
+        <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-sm">
+  <img
+    src={Staff}
+    alt="staff"
+    className="w-10 h-10 object-contain"
+  />
+</div>
           <div>
             <h1 className="text-lg md:text-xl lg:text-[24px] font-normal">Staff Account</h1>
             <p className="text-sm text-[#838383]">{UserEmail}</p>
@@ -348,6 +387,7 @@ const handleSubmitTask = async (task: any, index: number) => {
   {task.status === "Tasks In Progress" && task.deadline && (
   <TaskCountdown deadline={task.deadline} />
 )}
+
       <button
         onClick={() =>
           setExpandedIndex(index === expandedIndex ? null : index)
@@ -384,7 +424,7 @@ const handleSubmitTask = async (task: any, index: number) => {
 
 <textarea
   placeholder="Write here..."
-  value={taskTexts[`${task.status}-${index}`] ?? task.submission?.text ?? ""}
+  value={taskTexts[`${task.status}-${index}`] ?? task.submissiontext ?? ""}
   readOnly={task.status !== "Tasks In Progress"}
   onChange={(e) => handleTextChange(task.status, index, e.target.value)}
   className="w-full rounded-xl bg-[#F7ECEC] p-4 text-sm focus:outline-none resize-none h-24 focus:h-30 transition-height duration-300"
@@ -401,27 +441,29 @@ const handleSubmitTask = async (task: any, index: number) => {
               <textarea
                 placeholder="Rejection reason..."
                 readOnly
-                value={task.rejectionReason || ""}
+                value={task.rejectionreason || ""}
                 className="w-full rounded-xl bg-white/70 border border-red-400 p-4 text-sm focus:outline-none resize-none h-24"
               />
             </div>
   </div>
 )} 
 
-{task.status !== "Tasks In Progress" && task.submissionFiles && (
-    <div className="mt-2">
-    <h3 className="font-semibold">Submitted File</h3>
-    <a
-      href={task.submissionFiles}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-blue-500 hover:underline"
-    >
-      {task.submissionFiles.split("/").pop()} {/* shows filename */}
-    </a>
-      <h3 className="font-medium mb-2 mt-3 text-[13px]">Submitted: {task.submittedDate}</h3>
-    </div>
-  )} 
+{task.submissionfiles && JSON.parse(task.submissionfiles).length > 0 && (
+  <div className="mt-2">
+    <h3 className="font-semibold">Submitted Files</h3>
+    {JSON.parse(task.submissionfiles).map((file: string, index: number) => (
+      <a
+        key={index}
+        href={file} // remove the { } around file
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-500 hover:underline block"
+      >
+        {file.split("/").pop()} {/* shows just the filename */}
+      </a>
+    ))}
+  </div>
+)}
 
 {task.status !== "Tasks Completed" && (
     <div>
@@ -430,26 +472,40 @@ const handleSubmitTask = async (task: any, index: number) => {
               <Upload size={18} />
     Upload Document
     <input
-      type="file"
-      multiple
-      className="hidden"
-      onChange={(e) => handleFileChange(task.status, index, e.target.files)}
-    />
+    type="file"
+    className="hidden" // hides default ugly file input
+    onChange={(e) => handleFileChange(task.status, index, e.target.files)}
+  />
               </label>
+              {taskFiles[`${task.status}-${index}`] && (
+  <p className="text-sm mt-1">
+    Selected file: {taskFiles[`${task.status}-${index}`].name}
+  </p>
+)}
             </div>
 
           {/* Actions */}
-            <div className="mt-6 flex flex-col md:flex-row gap-4">
-              <button className="w-full md:w-1/2 border border-[#DE6328] text-[#DE6328] rounded-xl py-3 font-medium hover:bg-orange-50 transition">
+            <div className="mt-6 flex flex-col">
+              <button className="hidden w-full md:w-1/2 border border-[#DE6328] text-[#DE6328] rounded-xl py-3 font-medium hover:bg-orange-50 transition">
                 Save as Draft
               </button>
 
+              {task.status === "Tasks In Progress" && task.submissiontext === null && (
               <button
     onClick={() => handleSubmitTask(task, index)}
-    className="w-full md:w-1/2 bg-[#DE6328] text-white rounded-xl py-3 font-medium shadow-md hover:shadow-lg transition"
+    className="w-full bg-[#DE6328] text-white rounded-xl py-3 font-medium shadow-md hover:shadow-lg transition"
   >
-    Mark as Completed
+    Submit Task
   </button>
+              )}
+                            {task.status == "Tasks Rejected" && (
+              <button
+    onClick={() => handleSubmitTask(task, index)}
+    className="w-full bg-green-500 text-white rounded-xl py-3 font-medium shadow-md hover:shadow-lg transition"
+  >
+    Resubmit Task
+  </button>
+              )}
             </div>
             </div>
 )}

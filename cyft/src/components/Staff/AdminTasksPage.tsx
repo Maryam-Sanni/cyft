@@ -107,8 +107,8 @@ localStorage.setItem("rejectedCount", rejected.length.toString());
                   <td className="p-4 text-gray-600">
                     {task.description.slice(0, 40)}...
                   </td>
-                  <td className="p-4">{task.staffName}</td>
-                  <td className="p-4">{task.createdAt}</td>
+                  <td className="p-4">{task.staffname}</td>
+                  <td className="p-4">{task.createdat}</td>
                   <td className="p-4 text-center">
                     <button
                       onClick={() => setSelectedTask(task)}
