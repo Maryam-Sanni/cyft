@@ -20,6 +20,7 @@ import StaffLogin from "./components/Staff/StaffLogin";
 import StaffAnnouncement from "./components/Staff/staffAnnouncement";
 import AdminDashboard from "./components/Staff/staffAdmin"
 import AllStaffs from "./components/Staff/staffAll";
+import ResetPassword from "./components/Staff/ResetPassword";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
         <Route path="/staff-announcement" element={<StaffAnnouncement />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/admin-staff" element={<AllStaffs />} />
+        <Route path="/staff/reset-password" element={<ResetPassword />}/>
       </Routes>
     </BrowserRouter>
   );

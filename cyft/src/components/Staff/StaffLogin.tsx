@@ -20,37 +20,49 @@ const Login = () => {
     setLoading(true);
   
     try {
-      const res = await fetch(`${API_URL}/auth/login`, {
+      const endpoint = forgotPassword
+        ? `${API_URL}/auth/request-password-reset`
+        : `${API_URL}/auth/login`;
+  
+      const payload = forgotPassword
+        ? { email }
+        : { email, password };
+  
+      const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(payload),
       });
-  
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.message || "Login failed");
-      }
   
       const data = await res.json();
   
-      // Save token for future requests
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("UserEmail", data?.user?.email || "");
-      localStorage.setItem("id", data?.user?.id || "");
+      if (!res.ok) throw new Error(data.message);
   
-      // Redirect based on role
-      if (data.user.role === "ADMIN") {
-        navigate("/admin-dashboard");
-      } else if (data.user.role === "STAFF") {
-        navigate("/staff-dashboard");
+      if (forgotPassword) {
+        setError("");
+        alert("If the email exists, a reset link has been sent.");
+        setForgotPassword(false);
+        return;
       }
+  
+      // Login success
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("UserEmail", data.user.email);
+      localStorage.setItem("id", data.user.id);
+  
+      navigate(
+        data.user.role === "ADMIN"
+          ? "/admin-dashboard"
+          : "/staff-dashboard"
+      );
   
     } catch (err: any) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
-  };  
+  };
+   
 
   return (
     <section className="min-h-screen bg-gradient-to-br from-[#F0EBE9] to-white flex items-center justify-center px-4">
