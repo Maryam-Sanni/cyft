@@ -15,7 +15,11 @@ const ResetPassword = () => {
   const [error, setError] = useState("");
 
   if (!email || !token) {
-    return <p className="text-center mt-20">Invalid reset link</p>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-center text-lg text-gray-500">Invalid reset link</p>
+      </div>
+    );
   }
 
   const handleReset = async (e: any) => {
@@ -38,8 +42,7 @@ const ResetPassword = () => {
       if (!res.ok) throw new Error(data.message);
 
       alert("Password reset successful. Please login.");
-      navigate("/login");
-
+      navigate("/staff");
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -48,30 +51,51 @@ const ResetPassword = () => {
   };
 
   return (
-    <form
-      onSubmit={handleReset}
-      className="max-w-md mx-auto mt-20 space-y-4"
-    >
-      <h2 className="text-2xl font-bold">Reset Password</h2>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-orange-100 to-orange-50 px-4">
+      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
+        <h2 className="text-3xl font-bold text-orange-700 mb-6 text-center">
+          Reset Password
+        </h2>
 
-      <input
-        type="password"
-        placeholder="New password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="w-full h-12 px-4 border rounded-xl"
-        required
-      />
+        <p className="text-sm text-gray-500 mb-6 text-center">
+          Enter your new password below to reset your account password.
+        </p>
 
-      {error && <p className="text-red-500">{error}</p>}
+        <form onSubmit={handleReset} className="space-y-5">
+          <div>
+            <label className="block text-gray-700 mb-2">New Password</label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400"
+              required
+            />
+          </div>
 
-      <button
-        disabled={loading}
-        className="w-full h-12 bg-[#DE6328] text-white rounded-xl"
-      >
-        {loading ? "Resetting..." : "Reset Password"}
-      </button>
-    </form>
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+
+          <button
+            disabled={loading}
+            type="submit"
+            className="w-full py-3 bg-orange-600 text-white font-semibold rounded-xl hover:bg-orange-700 transition duration-300"
+          >
+            {loading ? "Resetting..." : "Reset Password"}
+          </button>
+        </form>
+
+        <p className="text-center text-sm text-gray-500 mt-6">
+          Remembered your password?{" "}
+          <span
+            onClick={() => navigate("/login")}
+            className="text-orange-600 font-medium cursor-pointer hover:underline"
+          >
+            Login
+          </span>
+        </p>
+      </div>
+    </div>
   );
 };
 
