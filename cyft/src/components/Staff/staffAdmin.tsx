@@ -83,7 +83,7 @@ export default function AdminDashboard() {
   
   // Count tasks per day
   tasks.forEach((task: Task) => {
-    const date = new Date(task.createdAt);
+    const date = new Date(task.createdat);
     const dayIndex = date.getDay(); // 0 = Sunday, 1 = Monday ...
     const weekNum = getWeekNumber(date);
   
