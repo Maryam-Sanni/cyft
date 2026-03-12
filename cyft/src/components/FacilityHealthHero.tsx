@@ -4,11 +4,11 @@ import arrowLong from "../assets/arrow-long.png";
 import { motion } from "framer-motion";
 
 // replace these with your real images
-import img1 from "../assets/IMG_2973.JPG";
+import img1 from "../assets/facilityhealth1.png";
 import img2 from "../assets/H9.png";
-import img3 from "../assets/IMG_2978.JPG";
-import img4 from "../assets/IMG_2974.JPG";
-import img5 from "../assets/IMG_2976.JPG";
+import img3 from "../assets/facilityhealth3.png";
+import img4 from "../assets/facilityhealth2.png";
+import img5 from "../assets/facilityhealth4.png";
 
 import type { Variants } from "framer-motion";
 
