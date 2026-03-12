@@ -21,6 +21,8 @@ import StaffAnnouncement from "./components/Staff/staffAnnouncement";
 import AdminDashboard from "./components/Staff/staffAdmin"
 import AllStaffs from "./components/Staff/staffAll";
 import ResetPassword from "./components/Staff/ResetPassword";
+import FacilityHealth from "./components/FacilityHealthPlatform";
+import BookaDemo from "./components/Book a Demo";
 
 function App() {
   return (
@@ -50,6 +52,8 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/admin-staff" element={<AllStaffs />} />
         <Route path="/staff/reset-password" element={<ResetPassword />}/>
+        <Route path="/facility-health-platform" element={<FacilityHealth />} />
+        <Route path="book-demo" element={<BookaDemo />} />
       </Routes>
     </BrowserRouter>
   );

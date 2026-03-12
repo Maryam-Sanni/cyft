@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [facilityOpen, setFacilityOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
 
@@ -63,31 +64,53 @@ const Header = () => {
           </a>
 
           {/* Services Dropdown */}
-          <div className="relative group cursor-pointer">
-            <div className="flex items-center gap-1 hover:text-[#DE6328] transition">
-              Services <ChevronDown className="w-4 h-4"/>
-            </div>
+<div className="relative group cursor-pointer">
+  <div className="flex items-center gap-1 hover:text-[#DE6328] transition">
+    Services <ChevronDown className="w-4 h-4"/>
+  </div>
 
-            <div className="absolute top-full mt-4 w-72 bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-              <ul className="py-4 text-sm text-gray-700">
-                <li 
-                onClick={() => {navigate("/events-management")}}
-                className="px-6 py-3 hover:bg-gray-100/70 cursor-pointer">
-                  Event Management
-                </li>
-                <li 
-                onClick={() => {navigate("/facility-management")}}
-                className="px-6 py-3 hover:bg-gray-100/70 cursor-pointer">
-                  Facility Management
-                </li>
-                <li 
-                onClick={() => {navigate("/training")}}
-                className="px-6 py-3 hover:bg-gray-100/70 cursor-pointer">
-                  Human Capacity Development
-                </li>
-              </ul>
-            </div>
-          </div>
+  <div className="absolute top-full mt-4 w-72 bg-white/90 backdrop-blur-xl rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+    <ul className="py-4 text-sm text-gray-700">
+      <li 
+        onClick={() => navigate("/events-management")}
+        className="px-6 py-3 hover:bg-gray-100/70 cursor-pointer">
+        Event Management
+      </li>
+
+{/* Facility Submenu */}
+<li>
+                    <button
+                      onClick={() => setFacilityOpen(!facilityOpen)}
+                      className="flex justify-between items-center w-full px-6 py-2 hover:bg-gray-100 cursor-pointer"
+                    >
+                      Facility <ChevronDown className="w-4 h-4"/>
+                    </button>
+                    {facilityOpen && (
+                      <ul className="ml-4 mt-1 rounded-xl">
+                        <li
+                          onClick={() => {navigate("/facility-management"); setServicesOpen(false); setFacilityOpen(false);}}
+                          className="px-6 py-2 hover:bg-gray-100 cursor-pointer"
+                        >
+                          Facility Management
+                        </li>
+                        <li
+                          onClick={() => {navigate("/facility-health-platform"); setServicesOpen(false); setFacilityOpen(false);}}
+                          className="px-6 py-2 hover:bg-gray-100 cursor-pointer"
+                        >
+                          Facility Health Platform
+                        </li>
+                      </ul>
+                    )}
+                  </li>
+
+      <li 
+        onClick={() => navigate("/training")}
+        className="px-6 py-3 hover:bg-gray-100/70 cursor-pointer">
+        Human Capacity Development
+      </li>
+    </ul>
+  </div>
+</div>
 
           <a href="/about-us" className="hover:text-[#DE6328] transition">
             About Us
@@ -157,9 +180,20 @@ const Header = () => {
               <p
                onClick={() => {navigate("/events-management")}}
               >Event Management</p>
-              <p
-              onClick={() => {navigate("/facility-management")}}
-              >Facility Management</p>
+       {/* Facility Submenu */}
+       <button
+                      onClick={() => setFacilityOpen(!facilityOpen)}
+                      className="flex justify-between w-full"
+                    >
+                      Facility <span>{facilityOpen ? "−" : "+"}</span>
+                    </button>
+
+                    {facilityOpen && (
+                      <div className="ml-4 mt-1 space-y-1">
+                        <p onClick={() => {navigate("/facility-management"); setMobileOpen(false)}}>Facility Management</p>
+                        <p onClick={() => {navigate("/facility-health-platform"); setMobileOpen(false)}}>Facility Health Platform</p>
+                      </div>
+                    )}
               <p
               onClick={() => {navigate("/training")}}
               >Human Capacity Development</p>
