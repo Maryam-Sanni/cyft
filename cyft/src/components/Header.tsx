@@ -94,10 +94,10 @@ const Header = () => {
                           Facility Management
                         </li>
                         <li
-                          onClick={() => {navigate("/facility-health-platform"); setServicesOpen(false); setFacilityOpen(false);}}
+                          onClick={() => {navigate("/facility-health"); setServicesOpen(false); setFacilityOpen(false);}}
                           className="px-6 py-2 hover:bg-gray-100 cursor-pointer"
                         >
-                          Facility Health Platform
+                          Facility Health
                         </li>
                       </ul>
                     )}
@@ -191,7 +191,7 @@ const Header = () => {
                     {facilityOpen && (
                       <div className="ml-4 mt-1 space-y-1">
                         <p onClick={() => {navigate("/facility-management"); setMobileOpen(false)}}>Facility Management</p>
-                        <p onClick={() => {navigate("/facility-health-platform"); setMobileOpen(false)}}>Facility Health Platform</p>
+                        <p onClick={() => {navigate("/facility-health"); setMobileOpen(false)}}>Facility Health</p>
                       </div>
                     )}
               <p

@@ -4,11 +4,11 @@ import arrowLong from "../assets/arrow-long.png";
 import { motion } from "framer-motion";
 
 // replace these with your real images
-import img1 from "../assets/facilityhealth1.png";
+import img1 from "../assets/facilityhealth4.png";
 import img2 from "../assets/H9.png";
 import img3 from "../assets/facilityhealth3.png";
 import img4 from "../assets/facilityhealth2.png";
-import img5 from "../assets/facilityhealth4.png";
+import img5 from "../assets/facilityhealth1.png";
 
 import type { Variants } from "framer-motion";
 
@@ -376,7 +376,7 @@ const Hero = () => {
         </p>
 
         <button onClick={() => navigate("/book-demo")} 
-        className="group lg:mt-15 mt-7 lg:w-[389px] w-[180px] cursor-pointer inline-flex items-center justify-between gap-4 bg-[#DE6328] text-white lg:px-6 lg:py-3 py-2 px-3 lg:text-lg text-md rounded-full font-bold shadow-lg hover:shadow-xl hover:scale-[1.03] transition-all" >
+        className="group lg:mt-15 mt-7 lg:w-[389px] w-[220px] cursor-pointer inline-flex items-center justify-between gap-4 bg-[#DE6328] text-white lg:px-6 lg:py-3 py-2 px-3 lg:text-lg text-md rounded-full font-bold shadow-lg hover:shadow-xl hover:scale-[1.03] transition-all" >
            Book a Demo <img src={arrowLong} alt="" className="transition-transform group-hover:translate-x-2" /> 
            </button>
       </div>

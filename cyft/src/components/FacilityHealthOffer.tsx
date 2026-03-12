@@ -25,7 +25,7 @@ export default function GallerySection() {
               </p>
   
               <button 
-              onClick={() => navigate("/gallery")} 
+              onClick={() => navigate("/book-demo")} 
               className="flex items-center gap-2 text-[#DE6328] text-sm font-normal hover:gap-3 transition-all mt-4">
                 Book a Demo  <img src={arrowLong} alt="Arrow" className="w-auto h-auto justify-right" />
               </button>

@@ -52,7 +52,7 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/admin-staff" element={<AllStaffs />} />
         <Route path="/staff/reset-password" element={<ResetPassword />}/>
-        <Route path="/facility-health-platform" element={<FacilityHealth />} />
+        <Route path="/facility-health" element={<FacilityHealth />} />
         <Route path="book-demo" element={<BookaDemo />} />
       </Routes>
     </BrowserRouter>
