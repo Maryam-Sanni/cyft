@@ -4,7 +4,7 @@ import WhyChoosingUs from "./WhyChoosingUs";
 import OurServices from "./services";
 import Experience from "./Experience";
 import Gallery from "./Gallery";
-import Testimonials from "./Testimonials";
+// import Testimonials from "./Testimonials";
 import Footer from "./Footer"
 
 const LandingPage = () => {
@@ -16,7 +16,7 @@ const LandingPage = () => {
     <OurServices />
     <Experience />
     <Gallery />
-    <Testimonials />
+    {/* <Testimonials /> */}
     <Footer />
     </div>
   );

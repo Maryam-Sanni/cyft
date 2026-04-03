@@ -31,7 +31,7 @@ export default function GallerySection() {
               </button>
             </div>
 
-             <div className="hidden md:block" >
+             <div className="md:mb-[-15px] mb-[-80px]" >
                 <img
                   src={Image}
                   alt="Facility-health"
