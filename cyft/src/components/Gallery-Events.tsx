@@ -36,10 +36,10 @@ function GalleryImage({
 
 const categories = ["exhibition", "catering", "decoration", "branding"];
 const categoryCovers: Record<string, string> = {
-  exhibition: "https://res.cloudinary.com/cyftconsulting/image/upload/f_jpg/v1775053101/IMG_5960_h5ze3m.heic",
+  exhibition: "https://res.cloudinary.com/cyftconsulting/image/upload/v1770296453/Event1_pyopi2.jpg",
   catering: "https://res.cloudinary.com/cyftconsulting/image/upload/v1775213554/catering_lh0njl.jpg",
   decoration: "https://res.cloudinary.com/cyftconsulting/image/upload/v1775213566/deco_eo9ysi.jpg",
-  branding: "https://res.cloudinary.com/cyftconsulting/image/upload/v1775051887/IMG-20221109-WA0227_n4vsbi.jpg",
+  branding: "https://res.cloudinary.com/cyftconsulting/image/upload/f_jpg/v1773656448/IMG_0332_ysfiml.heic",
 };
 const cloudName = "cyftconsulting";
 
@@ -185,6 +185,13 @@ export default function EventsGallery() {
                 >
                   ← Back to Categories
                 </button>
+
+                {!loading &&
+  (!gallery[activeCategory] || gallery[activeCategory].length === 0) && (
+    <p className="text-gray-500 col-span-full text-center h-[500px]">
+      No images found for {activeCategory}.
+    </p>
+)}
 
                 {loading ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
