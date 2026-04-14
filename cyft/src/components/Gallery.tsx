@@ -35,7 +35,7 @@ export default function GallerySection() {
             </div>
 
              {/* Image Layout (Desktop) */}
-             <div className="hidden sm:grid grid-cols-2 gap-4">
+             <div  onClick={() => navigate("/gallery")} className="hidden sm:grid grid-cols-2 gap-4">
 {/* Left stacked images */}
 <div className="flex flex-col gap-6">
 <img
@@ -67,7 +67,7 @@ className="w-full h-auto object-cover rounded-2xl mt-[-80px]"
             </div>
 
  {/* Image Layout (Mobile) */}
- <div className="relative w-full h-full sm:hidden mt-10 flex justify-center">
+ <div  onClick={() => navigate("/gallery")}  className="relative w-full h-full sm:hidden mt-10 flex justify-center">
   {/* Bottom image */}
   <img
     src={MobileGallery}
