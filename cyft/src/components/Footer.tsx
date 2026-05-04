@@ -41,6 +41,9 @@ import {
               <li
               onClick={() => {navigate("/training")}}
               >Training</li>
+               <li
+              onClick={() => {navigate("/staff")}}
+              >Staff Portal</li>
             </ul>
           </div>
   
