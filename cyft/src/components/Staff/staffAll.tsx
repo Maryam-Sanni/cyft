@@ -22,8 +22,8 @@ interface Staff {
   name: string;
   department: string;
   isActive: boolean;
-  dateCreated: string;
-  tempPassword: string;
+  datecreated: string;
+  temppassword: string;
 }
 
 const tabs = [
@@ -270,11 +270,11 @@ const [showTemp, setShowTemp] = useState(false);
                   </td>
 
                   <td className="text-[16px]">{staff.department}</td>
-                  <td className="text-[16px]">{staff.dateCreated}</td>
+                  <td className="text-[16px]">{staff.datecreated}</td>
 
 {/* Temp Password Column */}
 <td className="text-[16px] flex items-center justify-center gap-2">
-          {showTemp ? staff.tempPassword : "••••••••"}
+          {showTemp ? staff.temppassword : "••••••••"}
           <button
             onClick={() => setShowTemp(!showTemp)}
             className="p-1 rounded hover:bg-gray-200 transition"
