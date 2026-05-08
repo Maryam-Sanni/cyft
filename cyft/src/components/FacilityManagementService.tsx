@@ -92,7 +92,7 @@ type Service = {
 export default function EventsManagementServices() {
 
     return (
-<section className="max-w-6xl mx-auto px-4 py-12">
+<section className="max-w-6xl mx-auto px-4 py-12 mt-12">
   <AnimatePresence mode="wait">
     <motion.div
       key="list"
